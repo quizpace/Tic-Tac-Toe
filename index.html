@@ -1,12 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Link to the Chokokutai and Rubik Moonrocks fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chokokutai&family=Rubik+Moonrocks&display=swap" />
     <link rel="stylesheet" href="styles.css" />
     <title>Document</title>
-  </head>
+</head>
+
+
   <body>
+    <div class="main"></div>
     <div class="board" id="board">
       <div class="cell" data-cell></div>
       <div class="cell" data-cell></div>
@@ -22,6 +25,19 @@
       <div data-winning-message-text></div>
       <button id="restartButton">Restart</button>
     </div>
+    <div class="user-or-computer" id="userOrComputer">
+        <button id="userVsCom">
+          <span>User v.s Computer</span>
+        </button>
+        <button id="userVsUser">
+          <span>User v.s User</span>
+        </button>
+      </div>
+      <div class="main-menu" id="mainMenu">
+        <button id="mainMenuButton">
+          <span>Main Menu</span>
+        </button>
+
     <script src="script.js"></script>
   </body>
 </html>

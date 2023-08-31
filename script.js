@@ -13,15 +13,67 @@ const WINNING_COMBINATIONS = [
 const cellElements = document.querySelectorAll("[data-cell]");
 const board = document.getElementById("board");
 const winningMessageElement = document.getElementById("winningMessage");
+const userOrComputerElement = document.getElementById("userOrComputer");
+const userVsComButton = document.getElementById("userVsCom");
+const userVsUserButton = document.getElementById("userVsUser");
+const mainMenuButtonClick = document.getElementById("mainMenuButton");
 const restartButton = document.getElementById("restartButton");
 const winningMessageTextElement = document.querySelector(
   "[data-winning-message-text]"
 );
-let circleTurn;
+let circleTurn = false;
+let computerMode = false;
 
-startGame();
+restartButton.addEventListener("click", restartGame);
+userOrComputerElement.classList.add("show");
+userVsComButton.addEventListener("click", userVsCom);
+userVsUserButton.addEventListener("click", userVsUser);
+mainMenuButtonClick.addEventListener("click", mainMenu);
 
-restartButton.addEventListener("click", startGame);
+function userVsCom() {
+  computerMode = true;
+  userOrComputerElement.classList.remove("show");
+  startUserVsComGame();
+}
+
+// Add the isValidMove function
+function isValidMove(cell) {
+  return (
+    !cell.classList.contains(X_CLASS) && !cell.classList.contains(CIRCLE_CLASS)
+  );
+}
+
+function userVsUser() {
+  computerMode = false;
+  userOrComputerElement.classList.remove("show");
+  startGame();
+}
+
+function restartGame() {
+  if (computerMode) {
+    startUserVsComGame();
+  } else {
+    startGame();
+  }
+}
+
+function mainMenu() {
+  location.reload();
+}
+
+function startUserVsComGame() {
+  cellElements.forEach((cell) => {
+    cell.classList.remove(X_CLASS);
+    cell.classList.remove(CIRCLE_CLASS);
+    cell.removeEventListener("click", handleClick);
+    cell.addEventListener("click", handleClick, { once: true });
+  });
+  setBoardHoverClass();
+  winningMessageElement.classList.remove("show");
+  if (computerMode && circleTurn) {
+    setTimeout(computerMove, 500);
+  }
+}
 
 function startGame() {
   cellElements.forEach((cell) => {
@@ -36,15 +88,42 @@ function startGame() {
 
 function handleClick(e) {
   const cell = e.target;
+  if (!isValidMove(cell)) return;
+
   const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS;
   placeMark(cell, currentClass);
   if (checkWin(currentClass)) {
     endGame(false);
-    return; // Exit the function if there's a winner
+    return;
   } else if (isDraw()) {
     endGame(true);
   } else {
-    swapTurns(); // Switch turns only if no winner
+    swapTurns();
+    setBoardHoverClass();
+    if (computerMode && circleTurn) {
+      setTimeout(computerMove, 500);
+    }
+  }
+}
+
+function computerMove() {
+  const emptyCells = [...cellElements].filter(
+    (cell) =>
+      !cell.classList.contains(X_CLASS) &&
+      !cell.classList.contains(CIRCLE_CLASS)
+  );
+  if (emptyCells.length === 0) return;
+
+  const randomIndex = Math.floor(Math.random() * emptyCells.length);
+  const randomCell = emptyCells[randomIndex];
+
+  placeMark(randomCell, CIRCLE_CLASS);
+  if (checkWin(CIRCLE_CLASS)) {
+    endGame(false);
+  } else if (isDraw()) {
+    endGame(true);
+  } else {
+    swapTurns();
     setBoardHoverClass();
   }
 }
@@ -91,3 +170,6 @@ function checkWin(currentClass) {
     });
   });
 }
+
+// Start the initial game when the page loads
+startGame();
