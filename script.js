@@ -10,6 +10,7 @@ const WINNING_COMBINATIONS = [
   [0, 4, 8],
   [2, 4, 6],
 ];
+const backgroundMusic = document.getElementById("background-music");
 const cellElements = document.querySelectorAll("[data-cell]");
 const board = document.getElementById("board");
 const winningMessageElement = document.getElementById("winningMessage");
@@ -29,6 +30,10 @@ userOrComputerElement.classList.add("show");
 userVsComButton.addEventListener("click", userVsCom);
 userVsUserButton.addEventListener("click", userVsUser);
 mainMenuButtonClick.addEventListener("click", mainMenu);
+
+function playBackgroundMusic() {
+  backgroundMusic.play();
+}
 
 function userVsCom() {
   computerMode = true;
@@ -54,6 +59,12 @@ function restartGame() {
   } else {
     startGame();
   }
+
+  // Play the restart sound
+  const restartSound = document.getElementById("click-sound");
+  restartSound.pause();
+  restartSound.currentTime = 0;
+  restartSound.play();
 }
 
 function mainMenu() {
@@ -91,6 +102,22 @@ function handleClick(e) {
 
   const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS;
   placeMark(cell, currentClass);
+
+  // Play the appropriate turn sound
+  if (currentClass === CIRCLE_CLASS) {
+    // It's O's turn, play O's turn sound
+    const oTurnSound = document.getElementById("o-turn-sound");
+    oTurnSound.pause();
+    oTurnSound.currentTime = 0;
+    oTurnSound.play();
+  } else {
+    // It's X's turn, play X's turn sound
+    const xTurnSound = document.getElementById("x-turn-sound");
+    xTurnSound.pause();
+    xTurnSound.currentTime = 0;
+    xTurnSound.play();
+  }
+
   if (checkWin(currentClass)) {
     endGame(false);
     return;
@@ -115,6 +142,12 @@ function computerMove() {
 
   const randomIndex = Math.floor(Math.random() * emptyCells.length);
   const randomCell = emptyCells[randomIndex];
+
+  // Play the computer's turn sound
+  const computerTurnSound = document.getElementById("o-turn-sound");
+  computerTurnSound.pause();
+  computerTurnSound.currentTime = 0;
+  computerTurnSound.play();
 
   placeMark(randomCell, CIRCLE_CLASS);
   if (checkWin(CIRCLE_CLASS)) {
@@ -171,3 +204,5 @@ function checkWin(currentClass) {
 }
 
 startGame();
+
+playBackgroundMusic();
