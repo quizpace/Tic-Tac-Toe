@@ -36,7 +36,6 @@ function userVsCom() {
   startUserVsComGame();
 }
 
-// Add the isValidMove function
 function isValidMove(cell) {
   return (
     !cell.classList.contains(X_CLASS) && !cell.classList.contains(CIRCLE_CLASS)
@@ -171,5 +170,4 @@ function checkWin(currentClass) {
   });
 }
 
-// Start the initial game when the page loads
 startGame();
