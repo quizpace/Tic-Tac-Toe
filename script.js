@@ -188,7 +188,10 @@ function computerMove() {
   for (let i = 0; i < emptyCells.length; i++) {
     const index = parseInt(emptyCells[i].getAttribute("data-cell"));
     board[index] = CIRCLE_CLASS;
+
+    // Call minimax function to evaluate the score for the current move
     let score = minimax(board, 0, false);
+
     board[index] = "";
 
     if (score > bestScore) {
