@@ -10,9 +10,9 @@ const WINNING_COMBINATIONS = [
   [0, 4, 8],
   [2, 4, 6],
 ];
-const board = Array.from(Array(9).fill(""));
+
 const cellElements = document.querySelectorAll("[data-cell]");
-const board = document.getElementById("board");
+const gameBoardElement = document.getElementById("board");
 const winningMessageElement = document.getElementById("winningMessage");
 const userOrComputerElement = document.getElementById("userOrComputer");
 const userVsComButton = document.getElementById("userVsCom");
@@ -22,8 +22,11 @@ const restartButton = document.getElementById("restartButton");
 const winningMessageTextElement = document.querySelector(
   "[data-winning-message-text]"
 );
+
 let circleTurn = false;
 let computerMode = false;
+
+const gameBoard = Array.from(Array(9).fill(""));
 
 restartButton.addEventListener("click", restartGame);
 userOrComputerElement.classList.add("show");
@@ -31,13 +34,6 @@ userVsComButton.addEventListener("click", userVsCom);
 userVsUserButton.addEventListener("click", userVsUser);
 mainMenuButtonClick.addEventListener("click", mainMenu);
 
-function userVsCom() {
-  computerMode = true;
-  userOrComputerElement.classList.remove("show");
-  startUserVsComGame();
-}
-
-// Add the isValidMove function
 function isValidMove(cell) {
   return (
     !cell.classList.contains(X_CLASS) && !cell.classList.contains(CIRCLE_CLASS)
@@ -61,19 +57,27 @@ function restartGame() {
 function mainMenu() {
   location.reload();
 }
+function userVsCom() {
+  computerMode = true;
+  userOrComputerElement.classList.remove("show");
+  startUserVsComGame();
+}
 
 function startUserVsComGame() {
   cellElements.forEach((cell) => {
     cell.classList.remove(X_CLASS);
     cell.classList.remove(CIRCLE_CLASS);
-    cell.removeEventListener("click", handleClick);
+    cell.removeEventListener("click", handleUserClick);
+    cell.removeEventListener("click", computerMove);
     cell.addEventListener("click", handleUserClick, { once: true });
   });
   setBoardHoverClass();
   winningMessageElement.classList.remove("show");
 
   if (computerMode && circleTurn) {
-    setTimeout(computerMove, 500);
+    setTimeout(() => {
+      computerMove();
+    }, 500);
   }
 }
 
@@ -82,7 +86,10 @@ function handleUserClick(e) {
   if (!isValidMove(cell)) return;
 
   const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS;
+  const index = parseInt(cell.getAttribute("data-cell"));
+  gameBoard[index] = currentClass;
   placeMark(cell, currentClass);
+
   if (checkWin(currentClass)) {
     endGame(false);
     return;
@@ -113,7 +120,10 @@ function handleClick(e) {
   if (!isValidMove(cell)) return;
 
   const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS;
+  const index = parseInt(cell.getAttribute("data-cell"));
+  gameBoard[index] = currentClass;
   placeMark(cell, currentClass);
+
   if (checkWin(currentClass)) {
     endGame(false);
     return;
@@ -178,7 +188,10 @@ function computerMove() {
   for (let i = 0; i < emptyCells.length; i++) {
     const index = parseInt(emptyCells[i].getAttribute("data-cell"));
     board[index] = CIRCLE_CLASS;
+
+    // Call minimax function to evaluate the score for the current move
     let score = minimax(board, 0, false);
+
     board[index] = "";
 
     if (score > bestScore) {
@@ -186,19 +199,7 @@ function computerMove() {
       bestMove = index;
     }
   }
-
-  const randomCell = cellElements[bestMove];
-  placeMark(randomCell, CIRCLE_CLASS);
-  if (checkWin(CIRCLE_CLASS)) {
-    endGame(false);
-  } else if (isDraw()) {
-    endGame(true);
-  } else {
-    swapTurns();
-    setBoardHoverClass();
-  }
 }
-
 function endGame(draw) {
   if (draw) {
     winningMessageTextElement.innerText = "Draw!";
@@ -209,11 +210,7 @@ function endGame(draw) {
 }
 
 function isDraw() {
-  return [...cellElements].every((cell) => {
-    return (
-      cell.classList.contains(X_CLASS) || cell.classList.contains(CIRCLE_CLASS)
-    );
-  });
+  return gameBoard.every((cell) => cell !== "");
 }
 
 function placeMark(cell, currentClass) {
@@ -225,19 +222,19 @@ function swapTurns() {
 }
 
 function setBoardHoverClass() {
-  board.classList.remove(X_CLASS);
-  board.classList.remove(CIRCLE_CLASS);
+  gameBoardElement.classList.remove(X_CLASS);
+  gameBoardElement.classList.remove(CIRCLE_CLASS);
   if (circleTurn) {
-    board.classList.add(CIRCLE_CLASS);
+    gameBoardElement.classList.add(CIRCLE_CLASS);
   } else {
-    board.classList.add(X_CLASS);
+    gameBoardElement.classList.add(X_CLASS);
   }
 }
 
 function checkWin(currentClass) {
   return WINNING_COMBINATIONS.some((combinations) => {
     return combinations.every((index) => {
-      return cellElements[index].classList.contains(currentClass);
+      return gameBoard[index] === currentClass;
     });
   });
 }
