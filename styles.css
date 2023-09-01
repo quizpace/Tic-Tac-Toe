@@ -81,7 +81,7 @@ body {
   width: 100px; /* Adjust the width to make it smaller */
   top: 240px; /* Adjust the top position in pixels */
   left: 1290px; /* Adjust the left position in pixels */
-  opacity:70%;
+  opacity: 70%;
   filter: drop-shadow(0 0 2vmin #cfa687);
 }
 
@@ -92,7 +92,6 @@ body {
   left: 100px; /* Adjust the left position in pixels */
   filter: drop-shadow(0 0 2vmin #cfa687);
 }
-
 
 /* Apply Rubik Iso font to buttons and add animation */
 #userVsCom,
@@ -176,8 +175,6 @@ body {
   transform: scale(1.1);
 }
 
-
-
 .main {
   position: fixed;
   top: 50%;
@@ -256,8 +253,6 @@ body {
     transform: scale(1.5);
   }
 }
-
-
 
 .board {
   width: 100vw;
@@ -563,5 +558,3 @@ body {
 .winning-message.show {
   display: flex;
 }
-
-
