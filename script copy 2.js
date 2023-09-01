@@ -10,9 +10,7 @@ const WINNING_COMBINATIONS = [
   [0, 4, 8],
   [2, 4, 6],
 ];
-const muteAllButton = document.getElementById("mute-buttons");
-const muteToggleButton = document.getElementById("mute-toggle-button");
-const backgroundMusic = document.getElementById("background-music");
+const board = Array.from(Array(9).fill(""));
 const cellElements = document.querySelectorAll("[data-cell]");
 const board = document.getElementById("board");
 const winningMessageElement = document.getElementById("winningMessage");
@@ -26,48 +24,20 @@ const winningMessageTextElement = document.querySelector(
 );
 let circleTurn = false;
 let computerMode = false;
-let isSoundMuted = false;
 
 restartButton.addEventListener("click", restartGame);
 userOrComputerElement.classList.add("show");
 userVsComButton.addEventListener("click", userVsCom);
 userVsUserButton.addEventListener("click", userVsUser);
 mainMenuButtonClick.addEventListener("click", mainMenu);
-muteAllButton.addEventListener("click", toggleSound);
-
-muteToggleButton.addEventListener("click", () => {
-  backgroundMusic.muted = !backgroundMusic.muted;
-});
-
-function toggleSound() {
-  isSoundMuted = !isSoundMuted;
-
-  // Toggle individual sounds
-  const oTurnSound = document.getElementById("o-turn-sound");
-  const xTurnSound = document.getElementById("x-turn-sound");
-  const clickSound = document.getElementById("click-sound");
-
-  oTurnSound.muted = isSoundMuted;
-  xTurnSound.muted = isSoundMuted;
-  clickSound.muted = isSoundMuted;
-
-  muteAllButton.innerHTML = isSoundMuted ? "🔇" : "🔊";
-}
-
-function playBackgroundMusic() {
-  backgroundMusic.play();
-}
 
 function userVsCom() {
-  const buttonSound = document.getElementById("click-sound");
-  buttonSound.pause();
-  buttonSound.currentTime = 0;
-  buttonSound.play();
   computerMode = true;
   userOrComputerElement.classList.remove("show");
   startUserVsComGame();
 }
 
+// Add the isValidMove function
 function isValidMove(cell) {
   return (
     !cell.classList.contains(X_CLASS) && !cell.classList.contains(CIRCLE_CLASS)
@@ -75,10 +45,6 @@ function isValidMove(cell) {
 }
 
 function userVsUser() {
-  const buttonSound = document.getElementById("click-sound");
-  buttonSound.pause();
-  buttonSound.currentTime = 0;
-  buttonSound.play();
   computerMode = false;
   userOrComputerElement.classList.remove("show");
   startGame();
@@ -90,23 +56,10 @@ function restartGame() {
   } else {
     startGame();
   }
-
-  const restartSound = document.getElementById("click-sound");
-  restartSound.pause();
-  restartSound.currentTime = 0;
-  restartSound.play();
 }
 
 function mainMenu() {
-  const menuSound = document.getElementById("click-sound");
-  menuSound.pause();
-  menuSound.currentTime = 0;
-  menuSound.play();
-
-  // When the sound ends, reload the page
-  menuSound.addEventListener("ended", () => {
-    location.reload();
-  });
+  location.reload();
 }
 
 function startUserVsComGame() {
@@ -114,12 +67,33 @@ function startUserVsComGame() {
     cell.classList.remove(X_CLASS);
     cell.classList.remove(CIRCLE_CLASS);
     cell.removeEventListener("click", handleClick);
-    cell.addEventListener("click", handleClick, { once: true });
+    cell.addEventListener("click", handleUserClick, { once: true });
   });
   setBoardHoverClass();
   winningMessageElement.classList.remove("show");
+
   if (computerMode && circleTurn) {
     setTimeout(computerMove, 500);
+  }
+}
+
+function handleUserClick(e) {
+  const cell = e.target;
+  if (!isValidMove(cell)) return;
+
+  const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS;
+  placeMark(cell, currentClass);
+  if (checkWin(currentClass)) {
+    endGame(false);
+    return;
+  } else if (isDraw()) {
+    endGame(true);
+  } else {
+    swapTurns();
+    setBoardHoverClass();
+    if (computerMode && circleTurn) {
+      setTimeout(computerMove, 500);
+    }
   }
 }
 
@@ -140,22 +114,6 @@ function handleClick(e) {
 
   const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS;
   placeMark(cell, currentClass);
-
-  // Play the appropriate turn sound
-  if (currentClass === CIRCLE_CLASS) {
-    // It's O's turn, play O's turn sound
-    const oTurnSound = document.getElementById("o-turn-sound");
-    oTurnSound.pause();
-    oTurnSound.currentTime = 0;
-    oTurnSound.play();
-  } else {
-    // It's X's turn, play X's turn sound
-    const xTurnSound = document.getElementById("x-turn-sound");
-    xTurnSound.pause();
-    xTurnSound.currentTime = 0;
-    xTurnSound.play();
-  }
-
   if (checkWin(currentClass)) {
     endGame(false);
     return;
@@ -170,6 +128,42 @@ function handleClick(e) {
   }
 }
 
+function minimax(board, depth, isMaximizing) {
+  if (checkWin(CIRCLE_CLASS)) {
+    return 1;
+  }
+  if (checkWin(X_CLASS)) {
+    return -1;
+  }
+  if (isDraw()) {
+    return 0;
+  }
+
+  if (isMaximizing) {
+    let bestScore = -Infinity;
+    for (let i = 0; i < board.length; i++) {
+      if (board[i] === "") {
+        board[i] = CIRCLE_CLASS;
+        let score = minimax(board, depth + 1, false);
+        board[i] = "";
+        bestScore = Math.max(bestScore, score);
+      }
+    }
+    return bestScore;
+  } else {
+    let bestScore = Infinity;
+    for (let i = 0; i < board.length; i++) {
+      if (board[i] === "") {
+        board[i] = X_CLASS;
+        let score = minimax(board, depth + 1, true);
+        board[i] = "";
+        bestScore = Math.min(bestScore, score);
+      }
+    }
+    return bestScore;
+  }
+}
+
 function computerMove() {
   const emptyCells = [...cellElements].filter(
     (cell) =>
@@ -178,15 +172,22 @@ function computerMove() {
   );
   if (emptyCells.length === 0) return;
 
-  const randomIndex = Math.floor(Math.random() * emptyCells.length);
-  const randomCell = emptyCells[randomIndex];
+  let bestScore = -Infinity;
+  let bestMove;
 
-  // Play the computer's turn sound
-  const computerTurnSound = document.getElementById("o-turn-sound");
-  computerTurnSound.pause();
-  computerTurnSound.currentTime = 0;
-  computerTurnSound.play();
+  for (let i = 0; i < emptyCells.length; i++) {
+    const index = parseInt(emptyCells[i].getAttribute("data-cell"));
+    board[index] = CIRCLE_CLASS;
+    let score = minimax(board, 0, false);
+    board[index] = "";
 
+    if (score > bestScore) {
+      bestScore = score;
+      bestMove = index;
+    }
+  }
+
+  const randomCell = cellElements[bestMove];
   placeMark(randomCell, CIRCLE_CLASS);
   if (checkWin(CIRCLE_CLASS)) {
     endGame(false);
@@ -241,6 +242,5 @@ function checkWin(currentClass) {
   });
 }
 
+// Start the initial game when the page loads
 startGame();
-
-playBackgroundMusic();

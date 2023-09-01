@@ -7,13 +7,12 @@
     <title>Tic-Tac-Toe</title>
 </head>
   <body>
-    <audio id="background-music" controls loop>
+    <audio id="background-music" muted autoplay loop>
       <source src="TicTacToe.mp3" type="audio/mpeg">
+    </audio>
       <audio id="x-turn-sound" src="XPLAY.mp3" preload="auto"></audio>
       <audio id="o-turn-sound" src="OPLAY.mp3" preload="auto"></audio>
       <audio id="click-sound" src="CLICK.mp3"></audio>
-
-      Your browser does not support the audio element.
     </audio>    
     <div class="main"></div>
     <div class="board" id="board">
@@ -43,6 +42,25 @@
         <button id="mainMenuButton">
           <span>Main Menu</span>
         </button>
+        <button id="mute-toggle-button">🎼</button>
+        <button id="mute-buttons">🔊</button>
+
+      </div>
+      <div>
+        <svg id="moon" viewbox="-6 -6 12 12">
+          <defs>
+        </defs>
+            <circle r="5" fill="currentColor"></circle>
+        </svg>
+      </div>
+
+      <div>
+        <svg id="venus" viewbox="-6 -6 12 12">
+          <defs>
+        </defs>
+            <circle r="5" fill="currentColor"></circle>
+        </svg>
+      </div>
 
     <script src="script.js"></script>
   </body>

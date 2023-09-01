@@ -15,6 +15,32 @@ body {
   font-family: "Rubik Moonrocks", sans-serif;
 }
 
+#moon {
+  position: absolute;
+  top: 10vh;
+  left: -200px;
+  right: 1000px;
+  height: 10vmin;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 0;
+  color: #9bacc1;
+  filter: drop-shadow(0 0 5vmin #abedf3);
+}
+
+#venus {
+  position: absolute;
+  top: 20vh;
+  left: 1000px;
+  right: -200px;
+  height: 5vmin;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 0;
+  color: #87eb0d;
+  filter: drop-shadow(0 0 2vmin #abedf3);
+}
+
 /* Apply Rubik Iso font to buttons and add animation */
 #userVsCom,
 #userVsUser {
@@ -23,6 +49,30 @@ body {
 
 #mainMenuButton {
   font-family: "Rubik Moonrocks", sans-serif;
+}
+
+#mute-toggle-button {
+  font-size: 80px;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 100%;
+  cursor: pointer;
+  position: absolute;
+  top: -50px;
+  left: -1100px; /* Adjust the left position if needed */
+  background-image: linear-gradient(to bottom, #ff9900, #ed481f);
+  box-shadow: 0 0 20px rgba(195, 255, 0, 0.8);
+}
+
+#mute-buttons {
+  font-size: 50px;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  position: absolute;
+  top: -90px;
+  right: 20px; /* Adjust the right position if needed */
 }
 
 /* Animation for typing text effect */
