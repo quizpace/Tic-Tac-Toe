@@ -15,6 +15,41 @@ body {
   font-family: "Rubik Moonrocks", sans-serif;
 }
 
+@keyframes spinAndMove {
+  0%,
+  100% {
+    transform: rotateY(0deg) translateX(70px) translateY(10px);
+  }
+  50% {
+    transform: rotateY(30deg) translateX(100px) translateY(50px);
+  }
+}
+
+#spaceShip {
+  width: 150px;
+  position: absolute;
+  top: 50px; /* Adjust the top position */
+  left: 150px; /* Adjust the left position */
+  animation: spinAndMove 5s linear infinite; /* Adjust the animation duration as needed */
+  transform-origin: center center; /* Set the rotation origin to the center of the image */
+}
+
+#spaceShip {
+  width: 150px;
+  position: absolute;
+  animation: spinAndMove 10s linear infinite; /* Adjust the animation duration as needed */
+  transform-origin: center center; /* Set the rotation origin to the center of the image */
+}
+
+#spaceShip2 {
+  width: 150px;
+  position: absolute;
+  top: 400px; /* Adjust the top position */
+  left: 1050px; /* Adjust the left position */
+  animation: spinAndMove 25s linear infinite; /* Adjust the animation duration as needed */
+  transform-origin: center center; /* Set the rotation origin to the center of the image */
+}
+
 #moon {
   position: absolute;
   top: 10vh;
@@ -30,16 +65,34 @@ body {
 
 #venus {
   position: absolute;
-  top: 20vh;
+  top: 10vh;
   left: 1000px;
   right: -200px;
-  height: 5vmin;
+  height: 6vmin;
   margin-left: auto;
   margin-right: auto;
   z-index: 0;
-  color: #87eb0d;
-  filter: drop-shadow(0 0 2vmin #abedf3);
+  color: #e95534;
+  filter: drop-shadow(0 0 2vmin #f28a3b);
 }
+
+#venus2 {
+  position: absolute;
+  width: 100px; /* Adjust the width to make it smaller */
+  top: 240px; /* Adjust the top position in pixels */
+  left: 1290px; /* Adjust the left position in pixels */
+  opacity:70%;
+  filter: drop-shadow(0 0 2vmin #cfa687);
+}
+
+#saturn {
+  position: absolute;
+  width: 200px; /* Adjust the width to make it smaller */
+  top: 300px; /* Adjust the top position in pixels */
+  left: 100px; /* Adjust the left position in pixels */
+  filter: drop-shadow(0 0 2vmin #cfa687);
+}
+
 
 /* Apply Rubik Iso font to buttons and add animation */
 #userVsCom,
@@ -123,6 +176,8 @@ body {
   transform: scale(1.1);
 }
 
+
+
 .main {
   position: fixed;
   top: 50%;
@@ -202,6 +257,8 @@ body {
   }
 }
 
+
+
 .board {
   width: 100vw;
   height: 100vh;
@@ -224,6 +281,16 @@ body {
   cursor: pointer;
   border-radius: 9%;
   transition: box-shadow 0.3s ease-in-out; /* Smooth transition for the glow */
+  animation: spin 2s linear 1s 1 normal forwards; /* Add the spin animation here */
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .cell:hover {
@@ -496,3 +563,5 @@ body {
 .winning-message.show {
   display: flex;
 }
+
+
