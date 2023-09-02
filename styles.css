@@ -25,6 +25,47 @@ body {
   }
 }
 
+#aship {
+  width: 140px;
+  position: absolute;
+  animation: moveAround 100s linear infinite;
+  transform-origin: center center;
+  filter: drop-shadow(0 0 3vmin #9ef818);
+}
+
+@keyframes moveAround {
+  0% {
+    top: 700px;
+    left: 150px;
+    transform: scale(1);
+  }
+  20% {
+    top: 300px;
+    left: calc(90% - 155px); /* Center horizontally */
+    transform: scale(1.2);
+  }
+  40% {
+    top: 90px;
+    left: calc(70% - 195px); /* Center horizontally */
+    transform: scale(1);
+  }
+  60% {
+    top: 300px; /* Move up */
+    left: calc(80% - 75px); /* Center horizontally */
+    transform: scale(1);
+  }
+  80% {
+    top: 400px; /* Move down */
+    left: calc(50% - 85px); /* Center horizontally */
+    transform: scale(1);
+  }
+  100% {
+    top: 80px;
+    left: 150px;
+    transform: scale(1);
+  }
+}
+
 #spaceShip {
   width: 150px;
   position: absolute;

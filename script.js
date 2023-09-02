@@ -58,6 +58,45 @@ function playBackgroundMusic() {
   backgroundMusic.play();
 }
 
+function computerMove() {
+  const emptyCells = [...cellElements].filter(
+    (cell) =>
+      !cell.classList.contains(X_CLASS) &&
+      !cell.classList.contains(CIRCLE_CLASS)
+  );
+  if (emptyCells.length === 0) return;
+
+  let bestMove;
+  let bestScore = -Infinity;
+
+  for (let i = 0; i < emptyCells.length; i++) {
+    const cell = emptyCells[i];
+    cell.classList.add(CIRCLE_CLASS);
+    const score = minimax(getBoardState(), 0, false);
+    cell.classList.remove(CIRCLE_CLASS);
+
+    if (score > bestScore) {
+      bestScore = score;
+      bestMove = cell;
+    }
+  }
+
+  const computerTurnSound = document.getElementById("o-turn-sound");
+  computerTurnSound.pause();
+  computerTurnSound.currentTime = 0;
+  computerTurnSound.play();
+
+  placeMark(bestMove, CIRCLE_CLASS);
+  if (checkWin(CIRCLE_CLASS)) {
+    endGame(false);
+  } else if (isDraw()) {
+    endGame(true);
+  } else {
+    swapTurns();
+    setBoardHoverClass();
+  }
+}
+
 function userVsCom() {
   const buttonSound = document.getElementById("click-sound");
   buttonSound.pause();
