@@ -276,7 +276,7 @@ body {
   cursor: pointer;
   border-radius: 9%;
   transition: box-shadow 0.3s ease-in-out; /* Smooth transition for the glow */
-  animation: spin 2s linear 1s 1 normal forwards; /* Add the spin animation here */
+  animation: spin 4.5s linear 1s 1 normal forwards; /* Add the spin animation here */
 }
 
 @keyframes spin {
