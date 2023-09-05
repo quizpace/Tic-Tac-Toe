@@ -445,13 +445,26 @@ body {
 .cell.circle {
   cursor: not-allowed;
 }
-
+/* 
 .cell.x::before,
 .cell.x::after {
   background-color: rgb(157, 241, 32);
 }
 .cell.circle::before {
   background-color: rgb(255, 177, 42);
+} */
+
+.cell.x::before,
+.cell.x::after {
+  background-color: rgb(157, 241, 32);
+  box-shadow: 0 0 30px rgba(157, 241, 32, 0.7);
+  /* Adjust the color and spread (10px in this example) to control the glow effect */
+}
+
+.cell.circle::before {
+  background-color: rgb(255, 177, 42);
+  box-shadow: 0 0 30px rgba(255, 177, 42, 0.7);
+  /* Adjust the color and spread (10px in this example) to control the glow effect */
 }
 
 .board.x .cell:not(.x):not(.circle):hover::before,
@@ -642,7 +655,7 @@ body {
   opacity: 80%;
 }
 
-.draw-cell {
+/* .draw-cell {
   background-color: rgba(255, 217, 2, 0.976);
   animation: winning-cell-x-animation 1s ease-in-out;
 }
@@ -655,6 +668,44 @@ body {
 .winning-cell-o {
   background-color: rgba(219, 204, 234, 0.976);
   animation: winning-cell-o-animation 3s ease-in-out;
+} */
+
+@keyframes draw-cell-animation {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.draw-cell {
+  background-color: rgba(255, 217, 2, 0.976);
+  animation: winning-cell-x-animation 1s ease-in-out,
+    draw-cell-animation 2s ease-in-out infinite;
+  box-shadow: 0 0 50px rgba(255, 217, 2, 0.7);
+  /* Adjust the color and spread (50px in this example) to control the glow effect */
+}
+
+.winning-cell-x {
+  background-color: rgba(120, 210, 243, 0.976);
+  animation: winning-cell-x-animation 1s ease-in-out,
+    draw-cell-animation 5s ease-in-out infinite;
+  box-shadow: 0 0 50px rgba(120, 210, 243, 0.7);
+  /* Adjust the color and spread (10px in this example) to control the glow effect */
+}
+
+.winning-cell-o {
+  background-color: rgba(219, 204, 234, 0.976);
+  animation: winning-cell-o-animation 3s ease-in-out;
+  box-shadow: 0 0 50px rgba(219, 204, 234, 0.7);
+  /* Adjust the color and spread (10px in this example) to control the glow effect */
 }
 
 @keyframes winning-cell-x-animation {

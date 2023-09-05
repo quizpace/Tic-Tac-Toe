@@ -16,6 +16,7 @@ const backgroundMusic = document.getElementById("background-music");
 const cellElements = document.querySelectorAll("[data-cell]");
 const board = document.getElementById("board");
 const winningMessageElement = document.getElementById("winningMessage");
+
 const userOrComputerElement = document.getElementById("userOrComputer");
 const userVsComButton = document.getElementById("userVsCom");
 const userVsUserButton = document.getElementById("userVsUser");
@@ -27,7 +28,6 @@ const winningMessageTextElement = document.querySelector(
 let circleTurn = false;
 let computerMode = false;
 let isSoundMuted = false;
-let boardState = ["", "", "", "", "", "", "", "", ""];
 
 restartButton.addEventListener("click", restartGame);
 userOrComputerElement.classList.add("show");
@@ -57,45 +57,6 @@ function toggleSound() {
 
 function playBackgroundMusic() {
   backgroundMusic.play();
-}
-
-function computerMove() {
-  const emptyCells = [...cellElements].filter(
-    (cell) =>
-      !cell.classList.contains(X_CLASS) &&
-      !cell.classList.contains(CIRCLE_CLASS)
-  );
-  if (emptyCells.length === 0) return;
-
-  let bestMove;
-  let bestScore = -Infinity;
-
-  for (let i = 0; i < emptyCells.length; i++) {
-    const cell = emptyCells[i];
-    cell.classList.add(CIRCLE_CLASS);
-    // const score = minimax(getBoardState(), 0, false);
-    cell.classList.remove(CIRCLE_CLASS);
-
-    if (score > bestScore) {
-      bestScore = score;
-      bestMove = cell;
-    }
-  }
-
-  const computerTurnSound = document.getElementById("o-turn-sound");
-  computerTurnSound.pause();
-  computerTurnSound.currentTime = 0;
-  computerTurnSound.play();
-
-  placeMark(bestMove, CIRCLE_CLASS);
-  if (checkWin(CIRCLE_CLASS)) {
-    endGame(false);
-  } else if (isDraw()) {
-    endGame(true);
-  } else {
-    swapTurns();
-    setBoardHoverClass();
-  }
 }
 
 function userVsCom() {
@@ -202,9 +163,10 @@ function handleClick(e) {
   } else if (isDraw()) {
     endGame(true);
   } else {
-    swapTurns();
+    // Update circleTurn to indicate it's the computer's turn next
+    circleTurn = false;
     setBoardHoverClass();
-    if (computerMode && circleTurn) {
+    if (computerMode && !circleTurn) {
       setTimeout(computerMove, 500);
     }
   }
@@ -218,33 +180,159 @@ function computerMove() {
   );
   if (emptyCells.length === 0) return;
 
+  // Function to check if a combination has 2 out of 3 markers for the computer
+  function hasTwoComputerMarkers(combination) {
+    const [a, b, c] = combination;
+    const cellA = cellElements[a];
+    const cellB = cellElements[b];
+    const cellC = cellElements[c];
+    return (
+      (cellA.classList.contains(CIRCLE_CLASS) &&
+        cellB.classList.contains(CIRCLE_CLASS) &&
+        !cellC.classList.contains(X_CLASS)) ||
+      (cellA.classList.contains(CIRCLE_CLASS) &&
+        cellC.classList.contains(CIRCLE_CLASS) &&
+        !cellB.classList.contains(X_CLASS)) ||
+      (cellB.classList.contains(CIRCLE_CLASS) &&
+        cellC.classList.contains(CIRCLE_CLASS) &&
+        !cellA.classList.contains(X_CLASS))
+    );
+  }
+
+  // Check for potential user wins and block them
+  for (let i = 0; i < WINNING_COMBINATIONS.length; i++) {
+    const combination = WINNING_COMBINATIONS[i];
+    const [a, b, c] = combination;
+    const cellA = cellElements[a];
+    const cellB = cellElements[b];
+    const cellC = cellElements[c];
+
+    // Check if the user has two of their marks in a winning combination
+    if (
+      cellA.classList.contains(X_CLASS) &&
+      cellB.classList.contains(X_CLASS) &&
+      !cellC.classList.contains(CIRCLE_CLASS)
+    ) {
+      // Play the computer's turn sound with a delay
+      setTimeout(() => {
+        const computerTurnSound = document.getElementById("o-turn-sound");
+        computerTurnSound.pause();
+        computerTurnSound.currentTime = 0;
+        computerTurnSound.play();
+      }, 50); // Adjust the delay time as needed
+
+      // Delay the move itself to allow the sound to play
+      setTimeout(() => {
+        placeMark(cellC, CIRCLE_CLASS);
+        updateGameStatus();
+      }, 100); // Adjust the delay time as needed
+
+      return;
+    }
+
+    // Check if the computer has 2 markers in a winning combination and complete it
+    if (hasTwoComputerMarkers(combination)) {
+      for (const cell of [cellA, cellB, cellC]) {
+        if (
+          !cell.classList.contains(X_CLASS) &&
+          !cell.classList.contains(CIRCLE_CLASS)
+        ) {
+          // Play the computer's turn sound with a delay
+          setTimeout(() => {
+            const computerTurnSound = document.getElementById("o-turn-sound");
+            computerTurnSound.pause();
+            computerTurnSound.currentTime = 0;
+            computerTurnSound.play();
+          }, 50); // Adjust the delay time as needed
+
+          // Delay the move itself to allow the sound to play
+          setTimeout(() => {
+            placeMark(cell, CIRCLE_CLASS);
+            updateGameStatus();
+          }, 100); // Adjust the delay time as needed
+
+          return;
+        }
+      }
+    }
+  }
+
+  // If no immediate threat or winning move, make a random move
   const randomIndex = Math.floor(Math.random() * emptyCells.length);
   const randomCell = emptyCells[randomIndex];
 
-  // Play the computer's turn sound
-  const computerTurnSound = document.getElementById("o-turn-sound");
-  computerTurnSound.pause();
-  computerTurnSound.currentTime = 0;
-  computerTurnSound.play();
+  // Play the computer's turn sound with a delay
+  setTimeout(() => {
+    const computerTurnSound = document.getElementById("o-turn-sound");
+    computerTurnSound.pause();
+    computerTurnSound.currentTime = 0;
+    computerTurnSound.play();
+  }, 50); // Adjust the delay time as needed
 
-  placeMark(randomCell, CIRCLE_CLASS);
+  // Delay the move itself to allow the sound to play
+  setTimeout(() => {
+    placeMark(randomCell, CIRCLE_CLASS);
+    updateGameStatus();
+  }, 100); // Adjust the delay time as needed
+
+  // בדוק האם המחשב ניצח אחרי המהלך
   if (checkWin(CIRCLE_CLASS)) {
-    endGame(false);
-  } else if (isDraw()) {
+    // קריאה לפונקציה endGame כאשר המשחק נגמר עם ניצחון של המחשב
     endGame(true);
-  } else {
-    swapTurns();
-    setBoardHoverClass();
+    return;
   }
 }
 
 function endGame(draw) {
+  const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS;
+  const winningCellClass = circleTurn ? "winning-cell-o" : "winning-cell-x";
+
+  // מוצא את הקומבינציה המנצחת
+  const winningCombination = WINNING_COMBINATIONS.find((combinations) => {
+    return combinations.every((index) => {
+      return cellElements[index].classList.contains(currentClass);
+    });
+  });
+
   if (draw) {
+    const drawCell = "draw-cell";
+    cellElements.forEach((cell) => {
+      cell.classList.add(drawCell);
+    });
     winningMessageTextElement.innerText = "Draw!";
+    setTimeout(() => {
+      cellElements.forEach((cell) => {
+        cell.classList.remove(drawCell);
+      });
+      winningMessageElement.classList.add("show");
+
+      // קריאה לפונקציה updateGameStatus עם הפרמטר draw
+      updateGameStatus(draw);
+    }, 1000);
   } else {
     winningMessageTextElement.innerText = `${circleTurn ? "O's" : "X's"} Wins!`;
+
+    // משנה את המחלקות של התאים בקומבינציה המנצחת
+    if (winningCombination) {
+      winningCombination.forEach((index) => {
+        cellElements[index].classList.add(winningCellClass);
+      });
+    }
+
+    // השהיית הצגת ההודעה על הניצחון בזמן שהסגנון משתנה
+    setTimeout(() => {
+      // הסר את הסגנון של התאים בקומבינציה המנצחת
+      if (winningCombination) {
+        winningCombination.forEach((index) => {
+          cellElements[index].classList.remove(winningCellClass);
+        });
+      }
+      winningMessageElement.classList.add("show");
+
+      // קריאה לפונקציה updateGameStatus עם הפרמטר false (משמעו ניצחון)
+      updateGameStatus(false);
+    }, 1500);
   }
-  winningMessageElement.classList.add("show");
 }
 
 function isDraw() {
@@ -279,6 +367,10 @@ function checkWin(currentClass) {
       return cellElements[index].classList.contains(currentClass);
     });
   });
+}
+
+function updateGameStatus() {
+  // Handle the game status here if needed
 }
 
 startGame();

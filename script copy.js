@@ -10,9 +10,13 @@ const WINNING_COMBINATIONS = [
   [0, 4, 8],
   [2, 4, 6],
 ];
+const muteAllButton = document.getElementById("mute-buttons");
+const muteToggleButton = document.getElementById("mute-toggle-button");
+const backgroundMusic = document.getElementById("background-music");
 const cellElements = document.querySelectorAll("[data-cell]");
 const board = document.getElementById("board");
 const winningMessageElement = document.getElementById("winningMessage");
+
 const userOrComputerElement = document.getElementById("userOrComputer");
 const userVsComButton = document.getElementById("userVsCom");
 const userVsUserButton = document.getElementById("userVsUser");
@@ -23,20 +27,48 @@ const winningMessageTextElement = document.querySelector(
 );
 let circleTurn = false;
 let computerMode = false;
+let isSoundMuted = false;
 
 restartButton.addEventListener("click", restartGame);
 userOrComputerElement.classList.add("show");
 userVsComButton.addEventListener("click", userVsCom);
 userVsUserButton.addEventListener("click", userVsUser);
 mainMenuButtonClick.addEventListener("click", mainMenu);
+muteAllButton.addEventListener("click", toggleSound);
+
+muteToggleButton.addEventListener("click", () => {
+  backgroundMusic.muted = !backgroundMusic.muted;
+});
+
+function toggleSound() {
+  isSoundMuted = !isSoundMuted;
+
+  // Toggle individual sounds
+  const oTurnSound = document.getElementById("o-turn-sound");
+  const xTurnSound = document.getElementById("x-turn-sound");
+  const clickSound = document.getElementById("click-sound");
+
+  oTurnSound.muted = isSoundMuted;
+  xTurnSound.muted = isSoundMuted;
+  clickSound.muted = isSoundMuted;
+
+  muteAllButton.innerHTML = isSoundMuted ? "🔇" : "🔊";
+}
+
+function playBackgroundMusic() {
+  backgroundMusic.play();
+}
 
 function userVsCom() {
+  const buttonSound = document.getElementById("click-sound");
+  buttonSound.pause();
+  buttonSound.currentTime = 0;
+  buttonSound.play();
   computerMode = true;
   userOrComputerElement.classList.remove("show");
   startUserVsComGame();
 }
 
-// Add the isValidMove function
 function isValidMove(cell) {
   return (
     !cell.classList.contains(X_CLASS) && !cell.classList.contains(CIRCLE_CLASS)
@@ -44,6 +76,10 @@ function isValidMove(cell) {
 }
 
 function userVsUser() {
+  const buttonSound = document.getElementById("click-sound");
+  buttonSound.pause();
+  buttonSound.currentTime = 0;
+  buttonSound.play();
   computerMode = false;
   userOrComputerElement.classList.remove("show");
   startGame();
@@ -55,10 +91,23 @@ function restartGame() {
   } else {
     startGame();
   }
+
+  const restartSound = document.getElementById("click-sound");
+  restartSound.pause();
+  restartSound.currentTime = 0;
+  restartSound.play();
 }
 
 function mainMenu() {
-  location.reload();
+  const menuSound = document.getElementById("click-sound");
+  menuSound.pause();
+  menuSound.currentTime = 0;
+  menuSound.play();
+
+  // When the sound ends, reload the page
+  menuSound.addEventListener("ended", () => {
+    location.reload();
+  });
 }
 
 function startUserVsComGame() {
@@ -92,6 +141,22 @@ function handleClick(e) {
 
   const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS;
   placeMark(cell, currentClass);
+
+  // Play the appropriate turn sound
+  if (currentClass === CIRCLE_CLASS) {
+    // It's O's turn, play O's turn sound
+    const oTurnSound = document.getElementById("o-turn-sound");
+    oTurnSound.pause();
+    oTurnSound.currentTime = 0;
+    oTurnSound.play();
+  } else {
+    // It's X's turn, play X's turn sound
+    const xTurnSound = document.getElementById("x-turn-sound");
+    xTurnSound.pause();
+    xTurnSound.currentTime = 0;
+    xTurnSound.play();
+  }
+
   if (checkWin(currentClass)) {
     endGame(false);
     return;
@@ -106,35 +171,138 @@ function handleClick(e) {
   }
 }
 
-function computerMove() {
-  const emptyCells = [...cellElements].filter(
-    (cell) =>
-      !cell.classList.contains(X_CLASS) &&
-      !cell.classList.contains(CIRCLE_CLASS)
-  );
-  if (emptyCells.length === 0) return;
+function computerSmartMove() {
+  for (let i = 0; i < WINNING_COMBINATIONS.length; i++) {
+    const combination = WINNING_COMBINATIONS[i];
+    const [a, b, c] = combination;
+    const cellA = cellElements[a];
+    const cellB = cellElements[b];
+    const cellC = cellElements[c];
 
-  const randomIndex = Math.floor(Math.random() * emptyCells.length);
-  const randomCell = emptyCells[randomIndex];
+    // אם המחשב יכול לנצח על ידי מילוי תורת קריסטל מנצחת, עשה זאת
+    if (
+      cellA.classList.contains(CIRCLE_CLASS) &&
+      cellB.classList.contains(CIRCLE_CLASS) &&
+      isValidMove(cellC)
+    ) {
+      placeMark(cellC, CIRCLE_CLASS);
+      return;
+    } else if (
+      cellA.classList.contains(CIRCLE_CLASS) &&
+      cellC.classList.contains(CIRCLE_CLASS) &&
+      isValidMove(cellB)
+    ) {
+      placeMark(cellB, CIRCLE_CLASS);
+      return;
+    } else if (
+      cellB.classList.contains(CIRCLE_CLASS) &&
+      cellC.classList.contains(CIRCLE_CLASS) &&
+      isValidMove(cellA)
+    ) {
+      placeMark(cellA, CIRCLE_CLASS);
+      return;
+    }
 
-  placeMark(randomCell, CIRCLE_CLASS);
-  if (checkWin(CIRCLE_CLASS)) {
-    endGame(false);
-  } else if (isDraw()) {
-    endGame(true);
-  } else {
-    swapTurns();
-    setBoardHoverClass();
+    // אם היוזר יכול לנצח בתור הבא, חסום אותו
+    if (
+      cellA.classList.contains(X_CLASS) &&
+      cellB.classList.contains(X_CLASS) &&
+      isValidMove(cellC)
+    ) {
+      placeMark(cellC, CIRCLE_CLASS);
+      return;
+    } else if (
+      cellA.classList.contains(X_CLASS) &&
+      cellC.classList.contains(X_CLASS) &&
+      isValidMove(cellB)
+    ) {
+      placeMark(cellB, CIRCLE_CLASS);
+      return;
+    } else if (
+      cellB.classList.contains(X_CLASS) &&
+      cellC.classList.contains(X_CLASS) &&
+      isValidMove(cellA)
+    ) {
+      placeMark(cellA, CIRCLE_CLASS);
+      return;
+    }
   }
+
+  // אם אין אף אחת מהאפשרויות המנצחות או החסומות, פשוט בחר בתורת רנדומלית
+  computerMove();
 }
+
+// function computerMove() {
+//   const emptyCells = [...cellElements].filter(
+//     (cell) =>
+//       !cell.classList.contains(X_CLASS) &&
+//       !cell.classList.contains(CIRCLE_CLASS)
+//   );
+//   if (emptyCells.length === 0) return;
+
+//   const randomIndex = Math.floor(Math.random() * emptyCells.length);
+//   const randomCell = emptyCells[randomIndex];
+
+//   // Play the computer's turn sound
+//   const computerTurnSound = document.getElementById("o-turn-sound");
+//   computerTurnSound.pause();
+//   computerTurnSound.currentTime = 0;
+//   computerTurnSound.play();
+
+//   placeMark(randomCell, CIRCLE_CLASS);
+//   if (checkWin(CIRCLE_CLASS)) {
+//     endGame(false);
+//   } else if (isDraw()) {
+//     endGame(true);
+//   } else {
+//     swapTurns();
+//     setBoardHoverClass();
+//   }
+// }
 
 function endGame(draw) {
   if (draw) {
+    const drawCell = "draw-cell";
+    cellElements.forEach((cell) => {
+      cell.classList.add(drawCell);
+    });
     winningMessageTextElement.innerText = "Draw!";
+    setTimeout(() => {
+      cellElements.forEach((cell) => {
+        cell.classList.remove(drawCell);
+      });
+    }, 1000);
   } else {
     winningMessageTextElement.innerText = `${circleTurn ? "O's" : "X's"} Wins!`;
   }
-  winningMessageElement.classList.add("show");
+
+  const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS;
+  const winningCellClass = circleTurn ? "winning-cell-o" : "winning-cell-x";
+
+  // מוצא את הקומבינציה המנצחת
+  const winningCombination = WINNING_COMBINATIONS.find((combinations) => {
+    return combinations.every((index) => {
+      return cellElements[index].classList.contains(currentClass);
+    });
+  });
+
+  // משנה את המחלקות של התאים בקומבינציה המנצחת
+  if (winningCombination) {
+    winningCombination.forEach((index) => {
+      cellElements[index].classList.add(winningCellClass);
+    });
+  }
+
+  // השהיית הצגת ההודעה על הניצחון בזמן שהסגנון משתנה
+  setTimeout(() => {
+    // הסר את הסגנון של התאים בקומבינציה המנצחת
+    if (winningCombination) {
+      winningCombination.forEach((index) => {
+        cellElements[index].classList.remove(winningCellClass);
+      });
+    }
+    winningMessageElement.classList.add("show");
+  }, 1500);
 }
 
 function isDraw() {
@@ -171,5 +339,6 @@ function checkWin(currentClass) {
   });
 }
 
-// Start the initial game when the page loads
 startGame();
+
+playBackgroundMusic();
