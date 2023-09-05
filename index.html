@@ -4,9 +4,15 @@
     <!-- Link to the Chokokutai and Rubik Moonrocks fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chokokutai&family=Rubik+Moonrocks&display=swap" />
     <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
     <title>Tic-Tac-Toe</title>
 </head>
   <body>
+    <img src="spaceship.png" id="spaceShip" />
+    <img src="spaceship2.png" id="spaceShip2" />
+    <img src="venus.png" id="venus2" />
+    <img src="saturn.png" id="saturn" />
+    <img src="aship.png" id="aship" />
     <audio id="background-music" muted autoplay loop>
       <source src="TicTacToe.mp3" type="audio/mpeg">
     </audio>
@@ -27,6 +33,13 @@
       <div class="cell" data-cell></div>
     </div>
     <div class="winning-message" id="winningMessage">
+      <img src="spaceship.png" id="spaceShip" />
+      <img src="spaceship2.png" id="spaceShip2" />
+      <img src="venus.png" id="venus2" />
+      <img src="saturn.png" id="saturn" />
+      <!-- <img src="aship.png" id="alien" /> -->
+      <img src="alienv.png" id="alien1" />
+      <img src="alien2.png" id="alien2" />
       <div data-winning-message-text></div>
       <button id="restartButton">Restart</button>
     </div>
@@ -62,6 +75,7 @@
         </svg>
       </div>
 
-    <script src="script.js"></script>
+
+
   </body>
 </html>
