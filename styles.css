@@ -317,7 +317,7 @@ body {
   cursor: pointer;
   border-radius: 9%;
   transition: box-shadow 0.3s ease-in-out; /* Smooth transition for the glow */
-  animation: spin 4.5s linear 1s 1 normal forwards; /* Add the spin animation here */
+  animation: spin 3s linear 1s 1 normal forwards; /* Add the spin animation here */
 }
 
 @keyframes spin {
@@ -557,6 +557,47 @@ body {
   opacity: 80%;
 }
 
+.draw-cell {
+  background-color: rgba(255, 217, 2, 0.976);
+  animation: winning-cell-x-animation 1s ease-in-out;
+}
+
+.winning-cell-x {
+  background-color: rgba(243, 154, 37, 0.976);
+  animation: winning-cell-x-animation 1s ease-in-out;
+}
+
+.winning-cell-o {
+  background-color: rgba(212, 249, 117, 0.976);
+  animation: winning-cell-o-animation 3s ease-in-out;
+}
+
+@keyframes winning-cell-x-animation {
+  0% {
+    transform: scale(0.5);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes winning-cell-o-animation {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .winning-message {
   display: none;
   position: fixed;
@@ -564,12 +605,13 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(2, 45, 2, 0.9);
   justify-content: center;
   align-items: center;
   color: rgb(142, 220, 251);
   font-size: 10rem;
   flex-direction: column;
+  opacity: 85%;
 }
 
 .winning-message button {
