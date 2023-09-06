@@ -184,7 +184,7 @@ body {
   height: 10vmin;
   margin-left: auto;
   margin-right: auto;
-  opacity: 80%;
+  opacity: 0.8;
   filter: drop-shadow(0 0 3vmin #abedf3);
 }
 
@@ -209,7 +209,7 @@ body {
   margin-left: auto;
   margin-right: auto;
   z-index: 0;
-  opacity: 90%
+  opacity: 0.9;
   filter: drop-shadow(0 0 3vmin #890eee);
 }
 
@@ -218,7 +218,7 @@ body {
   width: 100px; /* Adjust the width to make it smaller */
   top: 240px; /* Adjust the top position in pixels */
   left: 1290px; /* Adjust the left position in pixels */
-  opacity: 70%;
+  opacity: 0.7;
   filter: drop-shadow(0 0 2vmin #cfa687);
 }
 
@@ -227,7 +227,10 @@ body {
     transform: translate(0, 0);
   }
   50% {
-    transform: translate(5px, -5px); /* Adjust the values to control the drift effect */
+    transform: translate(
+      5px,
+      -5px
+    ); /* Adjust the values to control the drift effect */
   }
   100% {
     transform: translate(0, 0);
@@ -240,10 +243,9 @@ body {
   top: 250px; /* Adjust the top position in pixels */
   left: 100px; /* Adjust the left position in pixels */
   filter: drop-shadow(0 0 2vmin #87a3cf);
-  opacity: 80%;
+  opacity: 0.8;
   animation: float-in-space 5s ease-in-out infinite; /* Adjust the animation duration as needed */
 }
-
 
 /* Apply Rubik Iso font to buttons and add animation */
 #userVsCom,
@@ -266,7 +268,7 @@ body {
   top: -50px;
   left: -1100px;
   z-index: 2;
-  opacity: 70%;
+  opacity: 0.7;
 }
 
 #sun:hover {
@@ -284,7 +286,7 @@ body {
   position: absolute;
   top: -50px;
   left: -1100px;
-  opacity: 40%;
+  opacity: 0.4;
 }
 
 #sun1:hover {
@@ -469,7 +471,7 @@ body {
   box-shadow: 0 0 90px 1px rgba(10, 13, 218, 0.7),
     0 0 10px 2px rgba(151, 239, 9, 0.5), 0 0 30px 9px rgba(244, 180, 4, 0.5),
     0 0 20px 2px rgba(126, 9, 149, 0.7), 0 0 10px 15px rgba(94, 34, 212, 0.3);
-  opacity: 90%;
+  opacity: 0.9;
 }
 
 .cell:first-child,
@@ -522,7 +524,7 @@ body {
 .board.x .cell:not(.x):not(.circle):hover::after,
 .board.circle .cell:not(.x):not(.circle):hover::before {
   background-color: darkgray;
-  opacity: 20%;
+  opacity: 0.2;
 }
 
 .cell.x::before,
@@ -650,7 +652,7 @@ body {
   background-color: rgb(67, 7, 81);
   color: rgb(189, 96, 226);
   border-color: rgb(162, 144, 234);
-  opacity: 80%;
+  opacity: 0.8;
   box-shadow: 0 0 10px 5px rgba(88, 170, 218, 0.7); /* Add a glow on hover */
 }
 
@@ -690,7 +692,7 @@ body {
   background-color: rgb(67, 7, 81);
   color: rgb(226, 111, 96);
   border-color: rgb(162, 144, 234);
-  opacity: 80%;
+  opacity: 0.8;
 }
 
 /* Ensure the main menu button is visible at all times */
@@ -703,23 +705,8 @@ body {
   background-color: rgb(176, 68, 200);
   color: rgb(98, 9, 116);
   border-color: rgb(228, 245, 130);
-  opacity: 80%;
+  opacity: 0.8;
 }
-
-/* .draw-cell {
-  background-color: rgba(255, 217, 2, 0.976);
-  animation: winning-cell-x-animation 1s ease-in-out;
-}
-
-.winning-cell-x {
-  background-color: rgba(120, 210, 243, 0.976);
-  animation: winning-cell-x-animation 1s ease-in-out;
-}
-
-.winning-cell-o {
-  background-color: rgba(219, 204, 234, 0.976);
-  animation: winning-cell-o-animation 3s ease-in-out;
-} */
 
 @keyframes draw-cell-animation {
   0% {
@@ -770,7 +757,7 @@ body {
 .draw-cell {
   height: 38vh;
   width: 38vh;
-  background-image: url('drawin.png'); /* Replace with the path to your image */
+  background-image: url("drawin.png"); /* Replace with the path to your image */
   background-size: cover; /* Scale the background image to cover the element */
   animation: winning-cell-x-animation 1s ease-in-out,
     draw-cell-animation 2s ease-in-out infinite,
@@ -778,7 +765,6 @@ body {
   box-shadow: 0 0 50px rgba(200, 209, 229, 0.7);
   /* Adjust the color and spread (50px in this example) to control the glow effect */
 }
-
 
 .winning-cell-x {
   height: 38vh;
@@ -846,7 +832,7 @@ body {
   color: rgb(142, 220, 251);
   font-size: 10rem;
   flex-direction: column;
-  opacity: 85%;
+  opacity: 0.85;
 }
 
 .winning-message button {
@@ -856,7 +842,7 @@ body {
   padding: 0.25em 0.5em;
   cursor: pointer;
   color: black;
-  opacity: 70%;
+  opacity: 0.7;
   border-radius: 22%;
   transition: box-shadow 0.3s ease-in-out, background-color 0.5s ease-in-out; /* Smooth transition for the glow and background color */
 }
