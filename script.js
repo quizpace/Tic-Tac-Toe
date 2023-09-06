@@ -11,7 +11,7 @@ const WINNING_COMBINATIONS = [
   [2, 4, 6],
 ];
 const muteAllButton = document.getElementById("mute-buttons");
-const muteToggleButton = document.getElementById("mute-toggle-button");
+const muteToggleButton = document.getElementById("sun");
 const backgroundMusic = document.getElementById("background-music");
 const cellElements = document.querySelectorAll("[data-cell]");
 const board = document.getElementById("board");
