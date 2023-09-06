@@ -45,7 +45,7 @@ body {
 #alien1 {
   width: 120px;
   position: absolute;
-  animation: moveAroundSpin 30s linear infinite;
+  animation: moveAroundSpin 10s linear infinite;
   transform-origin: center center;
   filter: drop-shadow(0 0 4vmin #9b18f8);
 }
@@ -184,22 +184,33 @@ body {
   height: 10vmin;
   margin-left: auto;
   margin-right: auto;
-  z-index: 0;
-  color: #9bacc1;
-  filter: drop-shadow(0 0 5vmin #abedf3);
+  opacity: 80%;
+  filter: drop-shadow(0 0 3vmin #abedf3);
 }
 
-#venus {
+#purple {
   position: absolute;
   top: 10vh;
   left: 1000px;
   right: -200px;
-  height: 6vmin;
+  height: 20vmin;
   margin-left: auto;
   margin-right: auto;
   z-index: 0;
-  color: #e95534;
-  filter: drop-shadow(0 0 2vmin #f28a3b);
+  filter: drop-shadow(0 0 2vmin #d06df4);
+}
+
+#purple2 {
+  position: absolute;
+  top: 15vh;
+  left: 20px;
+  right: 20px;
+  height: 20vmin;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 0;
+  opacity: 90%
+  filter: drop-shadow(0 0 3vmin #890eee);
 }
 
 #venus2 {
@@ -211,13 +222,28 @@ body {
   filter: drop-shadow(0 0 2vmin #cfa687);
 }
 
+@keyframes float-in-space {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(5px, -5px); /* Adjust the values to control the drift effect */
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
 #saturn {
   position: absolute;
-  width: 200px; /* Adjust the width to make it smaller */
-  top: 300px; /* Adjust the top position in pixels */
+  width: 170px; /* Adjust the width to make it smaller */
+  top: 250px; /* Adjust the top position in pixels */
   left: 100px; /* Adjust the left position in pixels */
-  filter: drop-shadow(0 0 2vmin #cfa687);
+  filter: drop-shadow(0 0 2vmin #87a3cf);
+  opacity: 80%;
+  animation: float-in-space 5s ease-in-out infinite; /* Adjust the animation duration as needed */
 }
+
 
 /* Apply Rubik Iso font to buttons and add animation */
 #userVsCom,
@@ -229,17 +255,42 @@ body {
   font-family: "Rubik Moonrocks", sans-serif;
 }
 
-#mute-toggle-button {
+#sun {
   font-size: 80px;
   border: none;
   padding: 10px 20px;
+  height: 20vmin;
   border-radius: 100%;
   cursor: pointer;
   position: absolute;
   top: -50px;
-  left: -1100px; /* Adjust the left position if needed */
-  background-image: linear-gradient(to bottom, #ff9900, #ed481f);
-  box-shadow: 0 0 20px rgba(195, 255, 0, 0.8);
+  left: -1100px;
+  z-index: 2;
+  opacity: 70%;
+}
+
+#sun:hover {
+  opacity: 100%;
+  transform: rotate(2deg);
+  transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* Add transitions for a smooth effect */
+}
+
+#sun1 {
+  font-size: 80px;
+  border: none;
+  padding: 10px 20px;
+  height: 20vmin;
+  border-radius: 100%;
+  position: absolute;
+  top: -50px;
+  left: -1100px;
+  opacity: 40%;
+}
+
+#sun1:hover {
+  opacity: 100%;
+  transform: rotate(2deg);
+  transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* Add transitions for a smooth effect */
 }
 
 #mute-buttons {
@@ -629,8 +680,8 @@ body {
   border: 3px solid transparent;
   padding: 0.75em 0.5em;
   cursor: pointer;
-  border-radius: 10%;
-  opacity: 90%;
+  border-radius: 70%;
+  opacity: 30%;
   transition: box-shadow 0.3s ease-in-out, border 0.3s ease-in-out;
 }
 
@@ -685,7 +736,7 @@ body {
   }
 }
 
-.draw-cell {
+.draw-cell2 {
   background-color: rgba(255, 217, 2, 0.976);
   animation: winning-cell-x-animation 1s ease-in-out,
     draw-cell-animation 2s ease-in-out infinite;
@@ -693,19 +744,64 @@ body {
   /* Adjust the color and spread (50px in this example) to control the glow effect */
 }
 
+@keyframes crazy-animation {
+  0% {
+    transform: rotate(0deg);
+    background-position: 0 0;
+  }
+  25% {
+    transform: rotate(90deg);
+    background-position: 100% 0;
+  }
+  50% {
+    transform: rotate(180deg);
+    background-position: 100% 100%;
+  }
+  75% {
+    transform: rotate(270deg);
+    background-position: 0 100%;
+  }
+  100% {
+    transform: rotate(360deg);
+    background-position: 0 0;
+  }
+}
+
+.draw-cell {
+  height: 38vh;
+  width: 38vh;
+  background-image: url('drawin.png'); /* Replace with the path to your image */
+  background-size: cover; /* Scale the background image to cover the element */
+  animation: winning-cell-x-animation 1s ease-in-out,
+    draw-cell-animation 2s ease-in-out infinite,
+    crazy-animation 2s linear infinite; /* Apply the "crazy" animation */
+  box-shadow: 0 0 50px rgba(200, 209, 229, 0.7);
+  /* Adjust the color and spread (50px in this example) to control the glow effect */
+}
+
+
 .winning-cell-x {
-  background-color: rgba(120, 210, 243, 0.976);
+  height: 38vh;
+  width: 38vh;
+  border-radius: 20%;
+  background-image: url("galaxys.png"); /* הפנייה לקובץ התמונה או הטקסטורה */
+  background-size: cover; /* כדי להתאים את התמונה לגודל הרקע */
   animation: winning-cell-x-animation 1s ease-in-out,
     draw-cell-animation 5s ease-in-out infinite;
-  box-shadow: 0 0 50px rgba(120, 210, 243, 0.7);
-  /* Adjust the color and spread (10px in this example) to control the glow effect */
+  box-shadow: 0 0 50px rgba(82, 8, 243, 0.7);
+  /* ניתן להתאים את הצבע והגודל (10px בדוגמה זו) כדי לשלוט באפקט ההארה */
 }
 
 .winning-cell-o {
-  background-color: rgba(219, 204, 234, 0.976);
-  animation: winning-cell-o-animation 3s ease-in-out;
-  box-shadow: 0 0 50px rgba(219, 204, 234, 0.7);
-  /* Adjust the color and spread (10px in this example) to control the glow effect */
+  height: 32vh;
+  width: 32vh;
+  border-radius: 20%;
+  background-image: url("orange.png"); /* הפנייה לקובץ התמונה או הטקסטורה */
+  background-size: cover; /* כדי להתאים את התמונה לגודל הרקע */
+  animation: winning-cell-x-animation 1s ease-in-out,
+    draw-cell-animation 5s ease-in-out infinite;
+  box-shadow: 0 0 50px rgba(82, 8, 243, 0.7);
+  /* ניתן להתאים את הצבע והגודל (10px בדוגמה זו) כדי לשלוט באפקט ההארה */
 }
 
 @keyframes winning-cell-x-animation {
