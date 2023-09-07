@@ -27,10 +27,10 @@ body {
 
 #aship {
   width: 140px;
-  position: absolute;
+  position: flex;
   animation: moveAround 100s linear infinite;
   transform-origin: center center;
-  filter: drop-shadow(0 0 3vmin #9ef818);
+  filter: drop-shadow(0 0 0.4vmin #93f818);
 }
 
 #alien {
@@ -152,6 +152,7 @@ body {
 }
 
 #spaceShip {
+  display: flex;
   width: 150px;
   position: absolute;
   top: 50px; /* Adjust the top position */
@@ -161,6 +162,7 @@ body {
 }
 
 #spaceShip {
+  display: flex;
   width: 150px;
   position: absolute;
   animation: spinAndMove 10s linear infinite; /* Adjust the animation duration as needed */
@@ -168,6 +170,7 @@ body {
 }
 
 #spaceShip2 {
+  display: flex;
   width: 150px;
   position: absolute;
   top: 400px; /* Adjust the top position */
@@ -177,6 +180,7 @@ body {
 }
 
 #moon {
+  display: flex;
   position: absolute;
   top: 10vh;
   left: -200px;
@@ -189,6 +193,7 @@ body {
 }
 
 #purple {
+  display: flex;
   position: absolute;
   top: 10vh;
   left: 1000px;
@@ -201,22 +206,54 @@ body {
 }
 
 #purple2 {
+  display: flex;
   position: absolute;
-  top: 15vh;
-  left: 20px;
-  right: 20px;
-  height: 20vmin;
+  top: 52vh;
+  left: 0px;
+  right: 1000px;
+  width: 22vmin; /* פרמטר הרוחב שווה ל-22vmin כך שהתמונה תהיה מעגל מושלם */
+  height: 25vmin;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 0;
+  opacity: 0.4;
+  filter: drop-shadow(0 0 6vmin #6104ad);
+  animation: spin 7s linear infinite;
+}
+
+
+#purple2:hover {
+  display: flex;
+  position: absolute;
+  top: 52vh;
+  left: 0px;
+  right: 1000px;
+  width: 22vmin; /* פרמטר הרוחב שווה ל-22vmin כך שהתמונה תהיה מעגל מושלם */
+  height: 25vmin;
   margin-left: auto;
   margin-right: auto;
   z-index: 0;
   opacity: 0.9;
-  filter: drop-shadow(0 0 3vmin #890eee);
+  filter: drop-shadow(0 0 6vmin #6104ad);
+  animation: spin 7s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(
+      360deg
+    ); /* You can increase the degree for a faster spin */
+  }
 }
 
 #venus2 {
+  display: flex;
   position: absolute;
   width: 100px; /* Adjust the width to make it smaller */
-  top: 240px; /* Adjust the top position in pixels */
+  top: 300px; /* Adjust the top position in pixels */
   left: 1290px; /* Adjust the left position in pixels */
   opacity: 0.7;
   filter: drop-shadow(0 0 2vmin #cfa687);
@@ -238,6 +275,7 @@ body {
 }
 
 #saturn {
+  display: flex;
   position: absolute;
   width: 170px; /* Adjust the width to make it smaller */
   top: 250px; /* Adjust the top position in pixels */
@@ -258,6 +296,7 @@ body {
 }
 
 #sun {
+  display: flex;
   font-size: 80px;
   border: none;
   padding: 10px 20px;
@@ -272,12 +311,14 @@ body {
 }
 
 #sun:hover {
+  display: flex;
   opacity: 100%;
   transform: rotate(2deg);
   transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* Add transitions for a smooth effect */
 }
 
 #sun1 {
+  display: flex;
   font-size: 80px;
   border: none;
   padding: 10px 20px;
@@ -290,12 +331,14 @@ body {
 }
 
 #sun1:hover {
+  display: flex;
   opacity: 100%;
   transform: rotate(2deg);
   transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* Add transitions for a smooth effect */
 }
 
 #mute-buttons {
+  display: flex;
   font-size: 50px;
   border: none;
   padding: 10px 20px;
