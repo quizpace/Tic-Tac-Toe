@@ -92,6 +92,8 @@ function restartGame() {
     startGame();
   }
 
+  resetMatrix(); // Call the resetMatrix function here
+
   const restartSound = document.getElementById("click-sound");
   restartSound.pause();
   restartSound.currentTime = 0;
@@ -138,6 +140,9 @@ function startGame() {
 function handleClick(e) {
   const cell = e.target;
   if (!isValidMove(cell)) return;
+  console.log(e.target.id);
+
+  let myindex = parseInt(e.target.id[e.target.id.length - 1]);
 
   const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS;
   placeMark(cell, currentClass);
@@ -149,14 +154,16 @@ function handleClick(e) {
     oTurnSound.pause();
     oTurnSound.currentTime = 0;
     oTurnSound.play();
+    matrix[myindex] = "O";
   } else {
     // It's X's turn, play X's turn sound
     const xTurnSound = document.getElementById("x-turn-sound");
     xTurnSound.pause();
     xTurnSound.currentTime = 0;
     xTurnSound.play();
+    matrix[myindex] = "X";
   }
-
+  console.log(matrix);
   if (checkWin(currentClass)) {
     endGame(false);
     return;
@@ -171,22 +178,44 @@ function handleClick(e) {
   }
 }
 
+let matrix = ["", "", "", "", "", "", "", "", ""]; // Change from const to let
+
+function resetMatrix() {
+  matrix = ["", "", "", "", "", "", "", "", ""]; // Reassign the matrix
+}
+
+// 1
 function computerMove() {
+  const blocking = check4moves();
   const emptyCells = [...cellElements].filter(
     (cell) =>
       !cell.classList.contains(X_CLASS) &&
       !cell.classList.contains(CIRCLE_CLASS)
   );
+
   if (emptyCells.length === 0) return;
 
-  const randomIndex = Math.floor(Math.random() * emptyCells.length);
-  const randomCell = emptyCells[randomIndex];
+  let randomIndex;
+  let randomCell;
+
+  if (blocking) {
+    // Block the player's winning move
+    randomCell = blocking;
+  } else {
+    // Otherwise, make a random move
+    randomIndex = Math.floor(Math.random() * emptyCells.length);
+    randomCell = emptyCells[randomIndex];
+  }
 
   // Play the computer's turn sound
   const computerTurnSound = document.getElementById("o-turn-sound");
   computerTurnSound.pause();
   computerTurnSound.currentTime = 0;
   computerTurnSound.play();
+
+  const myindex = parseInt(randomCell.id[randomCell.id.length - 1]);
+
+  matrix[myindex] = "O";
 
   placeMark(randomCell, CIRCLE_CLASS);
   if (checkWin(CIRCLE_CLASS)) {
@@ -197,6 +226,38 @@ function computerMove() {
     swapTurns();
     setBoardHoverClass();
   }
+}
+
+function check4moves() {
+  let once = true;
+  let move = undefined;
+  let winningMove = undefined;
+
+  WINNING_COMBINATIONS.forEach((arr) => {
+    const playerCount = arr.filter((index) => matrix[index] === "X").length;
+    const computerCount = arr.filter((index) => matrix[index] === "O").length;
+    const emptyCount = arr.filter((index) => matrix[index] === "").length;
+
+    if (playerCount === 2 && emptyCount === 1 && once) {
+      // Find the empty cell to block the player
+      const emptyIndex = arr.find((index) => matrix[index] === "");
+      move = cellElements[emptyIndex];
+      once = false;
+    }
+
+    if (computerCount === 2 && emptyCount === 1 && once) {
+      // Find the empty cell for a winning move
+      const emptyIndex = arr.find((index) => matrix[index] === "");
+      winningMove = cellElements[emptyIndex];
+      once = false;
+    }
+  });
+
+  if (winningMove) {
+    return winningMove; // Prioritize winning move
+  }
+
+  return move; // If no winning move found, return blocking move (if any)
 }
 
 function endGame(draw) {

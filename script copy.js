@@ -11,7 +11,7 @@ const WINNING_COMBINATIONS = [
   [2, 4, 6],
 ];
 const muteAllButton = document.getElementById("mute-buttons");
-const muteToggleButton = document.getElementById("mute-toggle-button");
+const muteToggleButton = document.getElementById("sun");
 const backgroundMusic = document.getElementById("background-music");
 const cellElements = document.querySelectorAll("[data-cell]");
 const board = document.getElementById("board");
@@ -138,6 +138,9 @@ function startGame() {
 function handleClick(e) {
   const cell = e.target;
   if (!isValidMove(cell)) return;
+  console.log(e.target.id);
+
+  let myindex = parseInt(e.target.id[e.target.id.length - 1]);
 
   const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS;
   placeMark(cell, currentClass);
@@ -149,14 +152,16 @@ function handleClick(e) {
     oTurnSound.pause();
     oTurnSound.currentTime = 0;
     oTurnSound.play();
+    matrix[myindex] = "O";
   } else {
     // It's X's turn, play X's turn sound
     const xTurnSound = document.getElementById("x-turn-sound");
     xTurnSound.pause();
     xTurnSound.currentTime = 0;
     xTurnSound.play();
+    matrix[myindex] = "X";
   }
-
+  console.log(matrix);
   if (checkWin(currentClass)) {
     endGame(false);
     return;
@@ -171,94 +176,156 @@ function handleClick(e) {
   }
 }
 
-function computerSmartMove() {
-  for (let i = 0; i < WINNING_COMBINATIONS.length; i++) {
-    const combination = WINNING_COMBINATIONS[i];
-    const [a, b, c] = combination;
-    const cellA = cellElements[a];
-    const cellB = cellElements[b];
-    const cellC = cellElements[c];
+const matrix = ["", "", "", "", "", "", "", "", ""];
 
-    // אם המחשב יכול לנצח על ידי מילוי תורת קריסטל מנצחת, עשה זאת
-    if (
-      cellA.classList.contains(CIRCLE_CLASS) &&
-      cellB.classList.contains(CIRCLE_CLASS) &&
-      isValidMove(cellC)
-    ) {
-      placeMark(cellC, CIRCLE_CLASS);
-      return;
-    } else if (
-      cellA.classList.contains(CIRCLE_CLASS) &&
-      cellC.classList.contains(CIRCLE_CLASS) &&
-      isValidMove(cellB)
-    ) {
-      placeMark(cellB, CIRCLE_CLASS);
-      return;
-    } else if (
-      cellB.classList.contains(CIRCLE_CLASS) &&
-      cellC.classList.contains(CIRCLE_CLASS) &&
-      isValidMove(cellA)
-    ) {
-      placeMark(cellA, CIRCLE_CLASS);
-      return;
-    }
+function computerMove() {
+  const blockingMove = check4moves();
+  const emptyCells = [...cellElements].filter(
+    (cell) =>
+      !cell.classList.contains(X_CLASS) &&
+      !cell.classList.contains(CIRCLE_CLASS)
+  );
+  if (emptyCells.length === 0) return;
 
-    // אם היוזר יכול לנצח בתור הבא, חסום אותו
-    if (
-      cellA.classList.contains(X_CLASS) &&
-      cellB.classList.contains(X_CLASS) &&
-      isValidMove(cellC)
-    ) {
-      placeMark(cellC, CIRCLE_CLASS);
-      return;
-    } else if (
-      cellA.classList.contains(X_CLASS) &&
-      cellC.classList.contains(X_CLASS) &&
-      isValidMove(cellB)
-    ) {
-      placeMark(cellB, CIRCLE_CLASS);
-      return;
-    } else if (
-      cellB.classList.contains(X_CLASS) &&
-      cellC.classList.contains(X_CLASS) &&
-      isValidMove(cellA)
-    ) {
-      placeMark(cellA, CIRCLE_CLASS);
-      return;
+  const computerTurnSound = document.getElementById("o-turn-sound");
+  computerTurnSound.pause();
+  computerTurnSound.currentTime = 0;
+  computerTurnSound.play();
+
+  if (blockingMove) {
+    // אם יש מהלך לנצח או לחסימה, בחר אותו מהלך
+    const blockingIndex = parseInt(blockingMove.id[blockingMove.id.length - 1]);
+    matrix[blockingIndex] = "O";
+    placeMark(blockingMove, CIRCLE_CLASS);
+  } else {
+    // אחרת, נבצע אסטרטגיה יותר חכמה:
+    // 1. בדוק האם יש מהלך בו אפשר לנצח בתור הזה
+    // 2. בדוק האם יש מהלך שבו ניתן למנוע את ניצחון השחקן בתור הבא
+    // 3. אם אף אחת מהמצבים לא קיימת, בחר מהלך אקראי
+
+    // בדוק האם יש מהלך בו אפשר לנצח בתור הזה
+    const winningMove = checkWinningMove();
+    if (winningMove) {
+      const winningIndex = parseInt(winningMove.id[winningMove.id.length - 1]);
+      matrix[winningIndex] = "O";
+      placeMark(winningMove, CIRCLE_CLASS);
+    } else {
+      // בדוק האם יש מהלך שבו ניתן למנוע את ניצחון השחקן בתור הבא
+      const blockingPlayerMove = checkBlockingPlayerMove();
+      if (blockingPlayerMove) {
+        const blockingPlayerIndex = parseInt(
+          blockingPlayerMove.id[blockingPlayerMove.id.length - 1]
+        );
+        matrix[blockingPlayerIndex] = "O";
+        placeMark(blockingPlayerMove, CIRCLE_CLASS);
+      } else {
+        // אם אף אחת מהמצבים לא קיימת, בחר מהלך אקראי
+        const randomIndex = Math.floor(Math.random() * emptyCells.length);
+        const randomCell = emptyCells[randomIndex];
+        const randomCellIndex = parseInt(
+          randomCell.id[randomCell.id.length - 1]
+        );
+        matrix[randomCellIndex] = "O";
+        placeMark(randomCell, CIRCLE_CLASS);
+      }
     }
   }
 
-  // אם אין אף אחת מהאפשרויות המנצחות או החסומות, פשוט בחר בתורת רנדומלית
-  computerMove();
+  if (checkWin(CIRCLE_CLASS)) {
+    endGame(false);
+  } else if (isDraw()) {
+    endGame(true);
+  } else {
+    swapTurns();
+    setBoardHoverClass();
+  }
 }
 
-// function computerMove() {
-//   const emptyCells = [...cellElements].filter(
-//     (cell) =>
-//       !cell.classList.contains(X_CLASS) &&
-//       !cell.classList.contains(CIRCLE_CLASS)
-//   );
-//   if (emptyCells.length === 0) return;
+// בדוק אם יש מהלך שבו אפשר לנצח בתור הזה
+function checkWinningMove() {
+  let winningMove = undefined;
+  WINNING_COMBINATIONS.forEach((arr) => {
+    const oCount = arr.filter((x) => matrix[x] === "O").length;
+    const emptyCount = arr.filter((x) => matrix[x] === "").length;
+    if (oCount === 2 && emptyCount === 1) {
+      const emptyIndex = arr.find((x) => matrix[x] === "");
+      winningMove = document.getElementById("cell" + emptyIndex);
+    }
+  });
 
-//   const randomIndex = Math.floor(Math.random() * emptyCells.length);
-//   const randomCell = emptyCells[randomIndex];
+  if (!winningMove) {
+    // בדוק האם יש מהלך שבו אפשר לנצח בתור הזה (לסיום מהלך אחד)
+    WINNING_COMBINATIONS.forEach((arr) => {
+      const oCount = arr.filter((x) => matrix[x] === "O").length;
+      const emptyCount = arr.filter((x) => matrix[x] === "").length;
+      if (oCount === 1 && emptyCount === 2) {
+        const emptyIndex = arr.find((x) => matrix[x] === "");
+        winningMove = document.getElementById("cell" + emptyIndex);
+      }
+    });
+  }
 
-//   // Play the computer's turn sound
-//   const computerTurnSound = document.getElementById("o-turn-sound");
-//   computerTurnSound.pause();
-//   computerTurnSound.currentTime = 0;
-//   computerTurnSound.play();
+  return winningMove;
+}
 
-//   placeMark(randomCell, CIRCLE_CLASS);
-//   if (checkWin(CIRCLE_CLASS)) {
-//     endGame(false);
-//   } else if (isDraw()) {
-//     endGame(true);
-//   } else {
-//     swapTurns();
-//     setBoardHoverClass();
-//   }
-// }
+// בדוק אם יש מהלך שבו ניתן למנוע את ניצחון השחקן בתור הבא
+function checkBlockingPlayerMove() {
+  let blockingPlayerMove = undefined;
+  WINNING_COMBINATIONS.forEach((arr) => {
+    const xCount = arr.filter((x) => matrix[x] === "X").length;
+    const emptyCount = arr.filter((x) => matrix[x] === "").length;
+    if (xCount === 2 && emptyCount === 1) {
+      const emptyIndex = arr.find((x) => matrix[x] === "");
+      blockingPlayerMove = document.getElementById("cell" + emptyIndex);
+    }
+  });
+  return blockingPlayerMove;
+}
+
+function getRandomEmptyCell() {
+  const emptyCells = [...cellElements].filter(
+    (cell) =>
+      !cell.classList.contains(X_CLASS) &&
+      !cell.classList.contains(CIRCLE_CLASS)
+  );
+
+  if (emptyCells.length === 0) return null;
+
+  const randomIndex = Math.floor(Math.random() * emptyCells.length);
+  return emptyCells[randomIndex];
+}
+
+function check4moves() {
+  let onceBlock = true;
+  let onceWin = true;
+  let cellToBlock = undefined;
+  let cellToWin = undefined;
+
+  WINNING_COMBINATIONS.forEach((arr) => {
+    if (
+      arr.filter((x) => matrix[x] == "X").length == 2 &&
+      arr.filter((x) => matrix[x] == "").length == 1 &&
+      onceBlock
+    ) {
+      const emptyIndex = arr.find((x) => matrix[x] == "");
+      cellToBlock = document.getElementById("cell" + emptyIndex);
+      onceBlock = false;
+    }
+
+    if (
+      arr.filter((x) => matrix[x] == "O").length == 2 &&
+      arr.filter((x) => matrix[x] == "").length == 1 &&
+      onceWin
+    ) {
+      const emptyIndex = arr.find((x) => matrix[x] == "");
+      cellToWin = document.getElementById("cell" + emptyIndex);
+      onceWin = false;
+    }
+  });
+
+  // בחר תא לחסימה אם נמצא, אחרת בחר תא לניצחון אם נמצא, אחרת החזר תא ריק אקראי
+  return cellToBlock || cellToWin || getRandomEmptyCell();
+}
 
 function endGame(draw) {
   if (draw) {
