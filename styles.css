@@ -25,38 +25,6 @@ body {
   }
 }
 
-#aship {
-  width: 140px;
-  position: absolute;
-  animation: moveAround 100s linear infinite;
-  transform-origin: center center;
-  filter: drop-shadow(0 0 0.4vmin #93f818);
-}
-
-#alien {
-  width: 140px;
-  height: 140px;
-  position: absolute;
-  animation: moveAround2 50s linear infinite;
-  transform-origin: center center;
-  filter: drop-shadow(0 0 3vmin #9ef818);
-}
-
-#alien1 {
-  width: 120px;
-  position: absolute;
-  animation: moveAroundSpin 100s linear infinite;
-  transform-origin: center center;
-  filter: drop-shadow(0 0 4vmin #9b18f8);
-}
-
-#alien2 {
-  width: 200px;
-  position: absolute;
-  animation: moveAround 30s linear infinite;
-  transform-origin: center center;
-}
-
 @keyframes moveAround {
   0% {
     top: 700px;
@@ -151,145 +119,6 @@ body {
   }
 }
 
-#spaceShip {
-  width: 150px;
-  position: absolute;
-  top: 50px; /* Adjust the top position */
-  left: 150px; /* Adjust the left position */
-  animation: spinAndMove 5s linear infinite; /* Adjust the animation duration as needed */
-  transform-origin: center center; /* Set the rotation origin to the center of the image */
-}
-
-#spaceShip {
-  width: 150px;
-  position: absolute;
-  animation: spinAndMove 10s linear infinite; /* Adjust the animation duration as needed */
-  transform-origin: center center; /* Set the rotation origin to the center of the image */
-}
-
-#spaceShip2 {
-  width: 150px;
-  position: absolute;
-  top: 400px; /* Adjust the top position */
-  left: 1050px; /* Adjust the left position */
-  animation: spinAndMove 25s linear infinite; /* Adjust the animation duration as needed */
-  transform-origin: center center; /* Set the rotation origin to the center of the image */
-}
-
-#moon {
-  position: absolute;
-  top: 10vh;
-  left: -200px;
-  right: 1000px;
-  height: 10vmin;
-  margin-left: auto;
-  margin-right: auto;
-  opacity: 0.8;
-  filter: drop-shadow(0 0 3vmin #abedf3);
-}
-
-#purple {
-  position: absolute;
-  top: 10vh;
-  left: 1000px;
-  right: -200px;
-  height: 20vmin;
-  margin-left: auto;
-  margin-right: auto;
-  z-index: 0;
-  filter: drop-shadow(0 0 2vmin #d06df4);
-}
-
-#purple2 {
-  position: absolute;
-  top: 52vh;
-  left: 0px;
-  right: 1000px;
-  width: 22vmin; /* פרמטר הרוחב שווה ל-22vmin כך שהתמונה תהיה מעגל מושלם */
-  height: 25vmin;
-  margin-left: auto;
-  margin-right: auto;
-  z-index: 0;
-  opacity: 0.4;
-  filter: drop-shadow(0 0 6vmin #6104ad);
-  animation: spin 7s linear infinite;
-}
-
-#purple2:hover {
-  position: absolute;
-  top: 52vh;
-  left: 0px;
-  right: 1000px;
-  width: 22vmin; /* פרמטר הרוחב שווה ל-22vmin כך שהתמונה תהיה מעגל מושלם */
-  height: 25vmin;
-  margin-left: auto;
-  margin-right: auto;
-  z-index: 0;
-  opacity: 0.9;
-  filter: drop-shadow(0 0 6vmin #6104ad);
-  animation: spin 1s linear infinite;
-}
-
-#purple3 {
-  position: absolute;
-  top: 30vh;
-  left: 0px;
-  right: 1000px;
-  width: 22vmin; /* פרמטר הרוחב שווה ל-22vmin כך שהתמונה תהיה מעגל מושלם */
-  height: 25vmin;
-  margin-left: auto;
-  margin-right: auto;
-  z-index: 0;
-  opacity: 1;
-  filter: drop-shadow(0 0 6vmin #6104ad);
-  animation: spin 0.2s linear infinite;
-}
-
-#earth {
-  position: absolute;
-  top: 30vh;
-  left: 0px;
-  right: 1000px;
-  width: 22vmin; /* פרמטר הרוחב שווה ל-22vmin כך שהתמונה תהיה מעגל מושלם */
-  height: 25vmin;
-  margin-left: auto;
-  margin-right: auto;
-  z-index: 0;
-  opacity: 1;
-  filter: drop-shadow(0 0 6vmin #6104ad);
-  animation: spin 0.2s linear infinite;
-}
-
-#earth2 {
-  position: absolute;
-  top: 30vh;
-  left: 1120px;
-  right: 1000px;
-  width: 22vmin; /* פרמטר הרוחב שווה ל-22vmin כך שהתמונה תהיה מעגל מושלם */
-  height: 25vmin;
-  margin-left: auto;
-  margin-right: auto;
-  z-index: 0;
-  opacity: 1;
-  filter: drop-shadow(0 0 6vmin #6104ad);
-  animation: spin 0.2s linear infinite;
-}
-
-#earth3 {
-  position: absolute;
-  top: 6vh;
-  left: 100px;
-  right: 100px;
-  width: 47vmin; /* פרמטר הרוחב שווה ל-22vmin כך שהתמונה תהיה מעגל מושלם */
-  height: 28vmin;
-  margin-left: auto;
-  margin-right: auto;
-  z-index: 0;
-  opacity: 9;
-  filter: drop-shadow(0 0 6vmin #6104ad);
-  animation: spin 3s linear infinite;
-}
-
 @keyframes spin {
   from {
     transform: rotate(0deg);
@@ -299,15 +128,6 @@ body {
       360deg
     ); /* You can increase the degree for a faster spin */
   }
-}
-
-#venus2 {
-  position: absolute;
-  width: 100px; /* Adjust the width to make it smaller */
-  top: 300px; /* Adjust the top position in pixels */
-  left: 1290px; /* Adjust the left position in pixels */
-  opacity: 0.7;
-  filter: drop-shadow(0 0 2vmin #cfa687);
 }
 
 @keyframes float-in-space {
@@ -325,74 +145,7 @@ body {
   }
 }
 
-#saturn {
-  position: absolute;
-  width: 170px; /* Adjust the width to make it smaller */
-  top: 250px; /* Adjust the top position in pixels */
-  left: 100px; /* Adjust the left position in pixels */
-  filter: drop-shadow(0 0 2vmin #87a3cf);
-  opacity: 0.8;
-  animation: float-in-space 5s ease-in-out infinite; /* Adjust the animation duration as needed */
-}
 
-/* Apply Rubik Iso font to buttons and add animation */
-#userVsCom,
-#userVsUser {
-  font-family: "Rubik Moonrocks", sans-serif;
-}
-
-#mainMenuButton {
-  font-family: "Rubik Moonrocks", sans-serif;
-}
-
-#sun {
-  font-size: 80px;
-  border: none;
-  padding: 10px 20px;
-  height: 20vmin;
-  border-radius: 100%;
-  cursor: pointer;
-  position: absolute;
-  top: -50px;
-  left: -1100px;
-  z-index: 2;
-  opacity: 0.7;
-}
-
-#sun:hover {
-  opacity: 100%;
-  transform: rotate(2deg);
-  transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* Add transitions for a smooth effect */
-}
-
-#sun1 {
-  font-size: 80px;
-  border: none;
-  padding: 10px 20px;
-  height: 20vmin;
-  border-radius: 100%;
-  position: absolute;
-  top: -50px;
-  left: -1100px;
-  opacity: 0.4;
-}
-
-#sun1:hover {
-  opacity: 100%;
-  transform: rotate(2deg);
-  transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* Add transitions for a smooth effect */
-}
-
-#mute-buttons {
-  font-size: 50px;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 30px;
-  cursor: pointer;
-  position: absolute;
-  top: -90px;
-  right: 20px; /* Adjust the right position if needed */
-}
 
 /* מסך סלולרי רגיל */
 @media (min-width: 320px) and (min-height: 480px) {
@@ -412,6 +165,254 @@ body {
 /* מסך מחשב נייד רגיל */
 @media (min-width: 1024px) and (min-height: 768px) {
   /* הגדרות עבור מסך מחשב נייד רגיל */
+  #aship {
+    width: 140px;
+    position: absolute;
+    animation: moveAround 100s linear infinite;
+    transform-origin: center center;
+    filter: drop-shadow(0 0 0.4vmin #93f818);
+  }
+  
+  #alien {
+    width: 140px;
+    height: 140px;
+    position: absolute;
+    animation: moveAround2 50s linear infinite;
+    transform-origin: center center;
+    filter: drop-shadow(0 0 3vmin #9ef818);
+  }
+  
+  #alien1 {
+    width: 120px;
+    position: absolute;
+    animation: moveAroundSpin 100s linear infinite;
+    transform-origin: center center;
+    filter: drop-shadow(0 0 4vmin #9b18f8);
+  }
+  
+  #alien2 {
+    width: 200px;
+    position: absolute;
+    animation: moveAround 30s linear infinite;
+    transform-origin: center center;
+  }
+  
+  #spaceShip {
+    width: 150px;
+    position: absolute;
+    top: 50px; /* Adjust the top position */
+    left: 150px; /* Adjust the left position */
+    animation: spinAndMove 5s linear infinite; /* Adjust the animation duration as needed */
+    transform-origin: center center; /* Set the rotation origin to the center of the image */
+  }
+  
+  #spaceShip {
+    width: 150px;
+    position: absolute;
+    animation: spinAndMove 10s linear infinite; /* Adjust the animation duration as needed */
+    transform-origin: center center; /* Set the rotation origin to the center of the image */
+  }
+  
+  #spaceShip2 {
+    width: 150px;
+    position: absolute;
+    top: 400px; /* Adjust the top position */
+    left: 1050px; /* Adjust the left position */
+    animation: spinAndMove 25s linear infinite; /* Adjust the animation duration as needed */
+    transform-origin: center center; /* Set the rotation origin to the center of the image */
+  }
+  
+  #moon {
+    position: absolute;
+    top: 10vh;
+    left: -200px;
+    right: 1000px;
+    height: 10vmin;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0.8;
+    filter: drop-shadow(0 0 3vmin #abedf3);
+  }
+  
+  #purple {
+    position: absolute;
+    top: 10vh;
+    left: 1000px;
+    right: -200px;
+    height: 20vmin;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 0;
+    filter: drop-shadow(0 0 2vmin #d06df4);
+  }
+  
+  #purple2 {
+    position: absolute;
+    top: 52vh;
+    left: 0px;
+    right: 1000px;
+    width: 22vmin; /* פרמטר הרוחב שווה ל-22vmin כך שהתמונה תהיה מעגל מושלם */
+    height: 25vmin;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 0;
+    opacity: 0.4;
+    filter: drop-shadow(0 0 6vmin #6104ad);
+    animation: spin 7s linear infinite;
+  }
+  
+  #purple2:hover {
+    position: absolute;
+    top: 52vh;
+    left: 0px;
+    right: 1000px;
+    width: 22vmin; /* פרמטר הרוחב שווה ל-22vmin כך שהתמונה תהיה מעגל מושלם */
+    height: 25vmin;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 0;
+    opacity: 0.9;
+    filter: drop-shadow(0 0 6vmin #6104ad);
+    animation: spin 1s linear infinite;
+  }
+  
+  #purple3 {
+    position: absolute;
+    top: 30vh;
+    left: 0px;
+    right: 1000px;
+    width: 22vmin; /* פרמטר הרוחב שווה ל-22vmin כך שהתמונה תהיה מעגל מושלם */
+    height: 25vmin;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 0;
+    opacity: 1;
+    filter: drop-shadow(0 0 6vmin #6104ad);
+    animation: spin 0.2s linear infinite;
+  }
+  
+  #earth {
+    position: absolute;
+    top: 30vh;
+    left: 0px;
+    right: 1000px;
+    width: 22vmin; /* פרמטר הרוחב שווה ל-22vmin כך שהתמונה תהיה מעגל מושלם */
+    height: 25vmin;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 0;
+    opacity: 1;
+    filter: drop-shadow(0 0 6vmin #6104ad);
+    animation: spin 0.2s linear infinite;
+  }
+  
+  #earth2 {
+    position: absolute;
+    top: 30vh;
+    left: 1120px;
+    right: 1000px;
+    width: 22vmin; /* פרמטר הרוחב שווה ל-22vmin כך שהתמונה תהיה מעגל מושלם */
+    height: 25vmin;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 0;
+    opacity: 1;
+    filter: drop-shadow(0 0 6vmin #6104ad);
+    animation: spin 0.2s linear infinite;
+  }
+  
+  #earth3 {
+    position: absolute;
+    top: 6vh;
+    left: 100px;
+    right: 100px;
+    width: 47vmin; /* פרמטר הרוחב שווה ל-22vmin כך שהתמונה תהיה מעגל מושלם */
+    height: 28vmin;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 0;
+    opacity: 9;
+    filter: drop-shadow(0 0 6vmin #6104ad);
+    animation: spin 3s linear infinite;
+  }
+  
+  #venus2 {
+    position: absolute;
+    width: 100px; /* Adjust the width to make it smaller */
+    top: 300px; /* Adjust the top position in pixels */
+    left: 1290px; /* Adjust the left position in pixels */
+    opacity: 0.7;
+    filter: drop-shadow(0 0 2vmin #cfa687);
+  }
+  
+  #saturn {
+    position: absolute;
+    width: 170px; /* Adjust the width to make it smaller */
+    top: 250px; /* Adjust the top position in pixels */
+    left: 100px; /* Adjust the left position in pixels */
+    filter: drop-shadow(0 0 2vmin #87a3cf);
+    opacity: 0.8;
+    animation: float-in-space 5s ease-in-out infinite; /* Adjust the animation duration as needed */
+  }
+  
+  /* Apply Rubik Iso font to buttons and add animation */
+  #userVsCom,
+  #userVsUser {
+    font-family: "Rubik Moonrocks", sans-serif;
+  }
+  
+  #mainMenuButton {
+    font-family: "Rubik Moonrocks", sans-serif;
+  }
+  
+  #sun {
+    font-size: 80px;
+    border: none;
+    padding: 10px 20px;
+    height: 20vmin;
+    border-radius: 100%;
+    cursor: pointer;
+    position: absolute;
+    top: -50px;
+    left: -1100px;
+    z-index: 2;
+    opacity: 0.7;
+  }
+  
+  #sun:hover {
+    opacity: 100%;
+    transform: rotate(2deg);
+    transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* Add transitions for a smooth effect */
+  }
+  
+  #sun1 {
+    font-size: 80px;
+    border: none;
+    padding: 10px 20px;
+    height: 20vmin;
+    border-radius: 100%;
+    position: absolute;
+    top: -50px;
+    left: -1100px;
+    opacity: 0.4;
+  }
+  
+  #sun1:hover {
+    opacity: 100%;
+    transform: rotate(2deg);
+    transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* Add transitions for a smooth effect */
+  }
+  
+  #mute-buttons {
+    font-size: 50px;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    position: absolute;
+    top: -90px;
+    right: 20px; /* Adjust the right position if needed */
+  }
 }
 
 /* מסך מחשב שולחני */
