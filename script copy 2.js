@@ -11,7 +11,7 @@ const WINNING_COMBINATIONS = [
   [2, 4, 6],
 ];
 const muteAllButton = document.getElementById("mute-buttons");
-const muteToggleButton = document.getElementById("mute-toggle-button");
+const muteToggleButton = document.getElementById("sun");
 const backgroundMusic = document.getElementById("background-music");
 const cellElements = document.querySelectorAll("[data-cell]");
 const board = document.getElementById("board");
@@ -138,6 +138,9 @@ function startGame() {
 function handleClick(e) {
   const cell = e.target;
   if (!isValidMove(cell)) return;
+  console.log(e.target.id);
+
+  let myindex = parseInt(e.target.id[e.target.id.length - 1]);
 
   const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS;
   placeMark(cell, currentClass);
@@ -149,30 +152,35 @@ function handleClick(e) {
     oTurnSound.pause();
     oTurnSound.currentTime = 0;
     oTurnSound.play();
+    matrix[myindex] = "O";
   } else {
     // It's X's turn, play X's turn sound
     const xTurnSound = document.getElementById("x-turn-sound");
     xTurnSound.pause();
     xTurnSound.currentTime = 0;
     xTurnSound.play();
+    matrix[myindex] = "X";
   }
-
+  console.log(matrix);
   if (checkWin(currentClass)) {
     endGame(false);
     return;
   } else if (isDraw()) {
     endGame(true);
   } else {
-    // Update circleTurn to indicate it's the computer's turn next
-    circleTurn = false;
+    swapTurns();
     setBoardHoverClass();
-    if (computerMode && !circleTurn) {
+    if (computerMode && circleTurn) {
       setTimeout(computerMove, 500);
     }
   }
 }
 
+const matrix = ["", "", "", "", "", "", "", "", ""];
+// 1
 function computerMove() {
+  let blocking = check4moves();
+
   const emptyCells = [...cellElements].filter(
     (cell) =>
       !cell.classList.contains(X_CLASS) &&
@@ -180,120 +188,55 @@ function computerMove() {
   );
   if (emptyCells.length === 0) return;
 
-  // Function to check if a combination has 2 out of 3 markers for the computer
-  function hasTwoComputerMarkers(combination) {
-    const [a, b, c] = combination;
-    const cellA = cellElements[a];
-    const cellB = cellElements[b];
-    const cellC = cellElements[c];
-    return (
-      (cellA.classList.contains(CIRCLE_CLASS) &&
-        cellB.classList.contains(CIRCLE_CLASS) &&
-        !cellC.classList.contains(X_CLASS)) ||
-      (cellA.classList.contains(CIRCLE_CLASS) &&
-        cellC.classList.contains(CIRCLE_CLASS) &&
-        !cellB.classList.contains(X_CLASS)) ||
-      (cellB.classList.contains(CIRCLE_CLASS) &&
-        cellC.classList.contains(CIRCLE_CLASS) &&
-        !cellA.classList.contains(X_CLASS))
-    );
-  }
+  // let myindex = parseInt(event.target.id[event.target.id.length - 1]);
 
-  // Check for potential user wins and block them
-  for (let i = 0; i < WINNING_COMBINATIONS.length; i++) {
-    const combination = WINNING_COMBINATIONS[i];
-    const [a, b, c] = combination;
-    const cellA = cellElements[a];
-    const cellB = cellElements[b];
-    const cellC = cellElements[c];
-
-    // Check if the user has two of their marks in a winning combination
-    if (
-      cellA.classList.contains(X_CLASS) &&
-      cellB.classList.contains(X_CLASS) &&
-      !cellC.classList.contains(CIRCLE_CLASS)
-    ) {
-      // Play the computer's turn sound with a delay
-      setTimeout(() => {
-        const computerTurnSound = document.getElementById("o-turn-sound");
-        computerTurnSound.pause();
-        computerTurnSound.currentTime = 0;
-        computerTurnSound.play();
-      }, 50); // Adjust the delay time as needed
-
-      // Delay the move itself to allow the sound to play
-      setTimeout(() => {
-        placeMark(cellC, CIRCLE_CLASS);
-        updateGameStatus();
-      }, 100); // Adjust the delay time as needed
-
-      return;
-    }
-
-    // Check if the computer has 2 markers in a winning combination and complete it
-    if (hasTwoComputerMarkers(combination)) {
-      for (const cell of [cellA, cellB, cellC]) {
-        if (
-          !cell.classList.contains(X_CLASS) &&
-          !cell.classList.contains(CIRCLE_CLASS)
-        ) {
-          // Play the computer's turn sound with a delay
-          setTimeout(() => {
-            const computerTurnSound = document.getElementById("o-turn-sound");
-            computerTurnSound.pause();
-            computerTurnSound.currentTime = 0;
-            computerTurnSound.play();
-          }, 50); // Adjust the delay time as needed
-
-          // Delay the move itself to allow the sound to play
-          setTimeout(() => {
-            placeMark(cell, CIRCLE_CLASS);
-            updateGameStatus();
-          }, 100); // Adjust the delay time as needed
-
-          return;
-        }
-      }
-    }
-  }
-
-  // If no immediate threat or winning move, make a random move
   const randomIndex = Math.floor(Math.random() * emptyCells.length);
   const randomCell = emptyCells[randomIndex];
 
-  // Play the computer's turn sound with a delay
-  setTimeout(() => {
-    const computerTurnSound = document.getElementById("o-turn-sound");
-    computerTurnSound.pause();
-    computerTurnSound.currentTime = 0;
-    computerTurnSound.play();
-  }, 50); // Adjust the delay time as needed
+  // Play the computer's turn sound
+  const computerTurnSound = document.getElementById("o-turn-sound");
+  computerTurnSound.pause();
+  computerTurnSound.currentTime = 0;
+  computerTurnSound.play();
 
-  // Delay the move itself to allow the sound to play
-  setTimeout(() => {
-    placeMark(randomCell, CIRCLE_CLASS);
-    updateGameStatus();
-  }, 100); // Adjust the delay time as needed
+  // matrix[myindex] = "O";
 
-  // בדוק האם המחשב ניצח אחרי המהלך
+  placeMark(randomCell, CIRCLE_CLASS);
   if (checkWin(CIRCLE_CLASS)) {
-    // קריאה לפונקציה endGame כאשר המשחק נגמר עם ניצחון של המחשב
+    endGame(false);
+  } else if (isDraw()) {
     endGame(true);
-    return;
+  } else {
+    swapTurns();
+    setBoardHoverClass();
   }
 }
 
-function endGame(draw) {
-  const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS;
-  const winningCellClass = circleTurn ? "winning-cell-o" : "winning-cell-x";
+// 1
+function check4moves() {
+  // WINNING_COMBINATIONS[0].filter((x) => matrix[x] == "X").length == 2;
+  // WINNING_COMBINATIONS[0].filter((x) => matrix[x] == "").length == 1;
+  let once = true;
+  let cell_to_block = undefined;
 
-  // מוצא את הקומבינציה המנצחת
-  const winningCombination = WINNING_COMBINATIONS.find((combinations) => {
-    return combinations.every((index) => {
-      return cellElements[index].classList.contains(currentClass);
-    });
+  // let myindex = parseInt(matrix.id[matrix.id.length - 1]);
+
+  WINNING_COMBINATIONS.forEach((arr) => {
+    if (
+      arr.filter((x) => matrix[x] == "X").length == 2 &&
+      arr.filter((x) => matrix[x] == "").length == 1 &&
+      once
+    ) {
+      cell_to_block = document.getElementById("cell" + x);
+      // matrix[x] = console.log(cellToblock);
+
+      once = false;
+    }
   });
+  return cell_to_block;
+}
 
+function endGame(draw) {
   if (draw) {
     const drawCell = "draw-cell";
     cellElements.forEach((cell) => {
@@ -304,35 +247,38 @@ function endGame(draw) {
       cellElements.forEach((cell) => {
         cell.classList.remove(drawCell);
       });
-      winningMessageElement.classList.add("show");
-
-      // קריאה לפונקציה updateGameStatus עם הפרמטר draw
-      updateGameStatus(draw);
     }, 1000);
   } else {
     winningMessageTextElement.innerText = `${circleTurn ? "O's" : "X's"} Wins!`;
+  }
 
-    // משנה את המחלקות של התאים בקומבינציה המנצחת
+  const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS;
+  const winningCellClass = circleTurn ? "winning-cell-o" : "winning-cell-x";
+
+  // מוצא את הקומבינציה המנצחת
+  const winningCombination = WINNING_COMBINATIONS.find((combinations) => {
+    return combinations.every((index) => {
+      return cellElements[index].classList.contains(currentClass);
+    });
+  });
+
+  // משנה את המחלקות של התאים בקומבינציה המנצחת
+  if (winningCombination) {
+    winningCombination.forEach((index) => {
+      cellElements[index].classList.add(winningCellClass);
+    });
+  }
+
+  // השהיית הצגת ההודעה על הניצחון בזמן שהסגנון משתנה
+  setTimeout(() => {
+    // הסר את הסגנון של התאים בקומבינציה המנצחת
     if (winningCombination) {
       winningCombination.forEach((index) => {
-        cellElements[index].classList.add(winningCellClass);
+        cellElements[index].classList.remove(winningCellClass);
       });
     }
-
-    // השהיית הצגת ההודעה על הניצחון בזמן שהסגנון משתנה
-    setTimeout(() => {
-      // הסר את הסגנון של התאים בקומבינציה המנצחת
-      if (winningCombination) {
-        winningCombination.forEach((index) => {
-          cellElements[index].classList.remove(winningCellClass);
-        });
-      }
-      winningMessageElement.classList.add("show");
-
-      // קריאה לפונקציה updateGameStatus עם הפרמטר false (משמעו ניצחון)
-      updateGameStatus(false);
-    }, 1500);
-  }
+    winningMessageElement.classList.add("show");
+  }, 1500);
 }
 
 function isDraw() {
@@ -367,10 +313,6 @@ function checkWin(currentClass) {
       return cellElements[index].classList.contains(currentClass);
     });
   });
-}
-
-function updateGameStatus() {
-  // Handle the game status here if needed
 }
 
 startGame();
