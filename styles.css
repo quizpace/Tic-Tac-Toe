@@ -29,116 +29,6 @@ body {
 
 /* מדיה קוורייז למסכים גדולים מ-1024px (לדוגמה, מחשבים שולחניים גדולים) */
 @media (min-width: 1025px) {
-  #aship {
-    max-width: 140px;
-    position: absolute;
-    animation: moveAround 100s linear infinite;
-    transform-origin: center center;
-    filter: drop-shadow(0 0 0.4vmin #93f818);
-  }
-
-  #alien {
-    max-width: 140px;
-    height: 140px;
-    position: absolute;
-    animation: moveAround2 50s linear infinite;
-    transform-origin: center center;
-    filter: drop-shadow(0 0 3vmin #9ef818);
-  }
-
-  #alien1 {
-    max-width: 120px;
-    position: absolute;
-    animation: moveAroundSpin 100s linear infinite;
-    transform-origin: center center;
-    filter: drop-shadow(0 0 4vmin #9b18f8);
-  }
-
-  #alien2 {
-    max-width: 200px;
-    position: absolute;
-    animation: moveAround 30s linear infinite;
-    transform-origin: center center;
-  }
-
-  #spaceShip {
-    max-width: 150px;
-    position: absolute;
-    top: 50px; /* Adjust the top position */
-    left: 150px; /* Adjust the left position */
-    animation: spinAndMove 5s linear infinite; /* Adjust the animation duration as needed */
-    transform-origin: center center; /* Set the rotation origin to the center of the image */
-  }
-
-  #spaceShip {
-    max-width: 150px;
-    position: absolute;
-    animation: spinAndMove 10s linear infinite; /* Adjust the animation duration as needed */
-    transform-origin: center center; /* Set the rotation origin to the center of the image */
-  }
-
-  #spaceShip2 {
-    max-width: 150px;
-    position: absolute;
-    top: 400px; /* Adjust the top position */
-    left: 1050px; /* Adjust the left position */
-    animation: spinAndMove 25s linear infinite; /* Adjust the animation duration as needed */
-    transform-origin: center center; /* Set the rotation origin to the center of the image */
-  }
-
-  #moon {
-    position: absolute;
-    top: 10vh;
-    left: -200px;
-    right: 1000px;
-    height: 10vmin;
-    margin-left: auto;
-    margin-right: auto;
-    opacity: 0.8;
-    filter: drop-shadow(0 0 3vmin #abedf3);
-  }
-
-  #purple {
-    position: absolute;
-    top: 10vh;
-    left: 1000px;
-    right: -200px;
-    height: 20vmin;
-    margin-left: auto;
-    margin-right: auto;
-    z-index: 0;
-    filter: drop-shadow(0 0 2vmin #d06df4);
-  }
-
-  #purple2 {
-    position: absolute;
-    top: 52vh;
-    left: 0px;
-    right: 1000px;
-    max-width: 22vmin; /* פרמטר הרוחב שווה ל-22vmin כך שהתמונה תהיה מעגל מושלם */
-    height: 25vmin;
-    margin-left: auto;
-    margin-right: auto;
-    z-index: 0;
-    opacity: 0.4;
-    filter: drop-shadow(0 0 6vmin #6104ad);
-    animation: spin 7s linear infinite;
-  }
-
-  #purple2:hover {
-    position: absolute;
-    top: 52vh;
-    left: 0px;
-    right: 1000px;
-    max-width: 22vmin; /* פרמטר הרוחב שווה ל-22vmin כך שהתמונה תהיה מעגל מושלם */
-    height: 25vmin;
-    margin-left: auto;
-    margin-right: auto;
-    z-index: 0;
-    opacity: 0.9;
-    filter: drop-shadow(0 0 6vmin #6104ad);
-    animation: spin 1s linear infinite;
-  }
 }
 
 .image-container {
@@ -282,7 +172,7 @@ body {
 }
 
 #aship {
-  width: 140px;
+  width: 10%;
   position: absolute;
   animation: moveAround 100s linear infinite;
   transform-origin: center center;
@@ -314,26 +204,26 @@ body {
 }
 
 #spaceShip {
-  width: 150px;
+  width: 12%;
   position: absolute;
-  top: 50px; /* Adjust the top position */
-  left: 150px; /* Adjust the left position */
+  top: 4%; /* Adjust the top position */
+  left: 10%; /* Adjust the left position */
   animation: spinAndMove 5s linear infinite; /* Adjust the animation duration as needed */
   transform-origin: center center; /* Set the rotation origin to the center of the image */
 }
 
 #spaceShip {
-  width: 150px;
+  width: 12%;
   position: absolute;
   animation: spinAndMove 10s linear infinite; /* Adjust the animation duration as needed */
   transform-origin: center center; /* Set the rotation origin to the center of the image */
 }
 
 #spaceShip2 {
-  width: 150px;
+  width: 12%;
   position: absolute;
-  top: 400px; /* Adjust the top position */
-  left: 1050px; /* Adjust the left position */
+  top: 58%; /* Adjust the top position */
+  left: 70%; /* Adjust the left position */
   animation: spinAndMove 25s linear infinite; /* Adjust the animation duration as needed */
   transform-origin: center center; /* Set the rotation origin to the center of the image */
 }
@@ -341,8 +231,8 @@ body {
 #moon {
   position: absolute;
   top: 10vh;
-  left: -200px;
-  right: 1000px;
+  left: 3%;
+  right: 98%;
   height: 10vmin;
   margin-left: auto;
   margin-right: auto;
@@ -350,11 +240,23 @@ body {
   filter: drop-shadow(0 0 3vmin #abedf3);
 }
 
+#moon:hover {
+  position: absolute;
+  top: 10vh;
+  left: 3%;
+  right: 98%;
+  height: 10vmin;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 1;
+  filter: drop-shadow(0 0 2vmin #abedf3);
+}
+
 #purple {
   position: absolute;
   top: 10vh;
-  left: 1000px;
-  right: -200px;
+  left: 80%;
+  right: 5%;
   height: 20vmin;
   margin-left: auto;
   margin-right: auto;
@@ -362,11 +264,23 @@ body {
   filter: drop-shadow(0 0 2vmin #d06df4);
 }
 
+#purple:hover {
+  position: absolute;
+  top: 10vh;
+  left: 80%;
+  right: 5%;
+  height: 20vmin;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 0;
+  filter: drop-shadow(0 0 3vmin #91cea2);
+}
+
 #purple2 {
   position: absolute;
   top: 52vh;
-  left: 0px;
-  right: 1000px;
+  left: 0%;
+  right: 70%;
   width: 22vmin; /* פרמטר הרוחב שווה ל-22vmin כך שהתמונה תהיה מעגל מושלם */
   height: 25vmin;
   margin-left: auto;
@@ -380,8 +294,8 @@ body {
 #purple2:hover {
   position: absolute;
   top: 52vh;
-  left: 0px;
-  right: 1000px;
+  left: 0%;
+  right: 70%;
   width: 22vmin; /* פרמטר הרוחב שווה ל-22vmin כך שהתמונה תהיה מעגל מושלם */
   height: 25vmin;
   margin-left: auto;
@@ -405,6 +319,21 @@ body {
   opacity: 1;
   filter: drop-shadow(0 0 6vmin #6104ad);
   animation: spin 0.2s linear infinite;
+}
+
+#purple4res {
+  position: absolute;
+  top: 1vh;
+  left: 20%;
+  right: 65%;
+  width: 120vmin; /* פרמטר הרוחב שווה ל-22vmin כך שהתמונה תהיה מעגל מושלם */
+  height: 150vmin;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 0;
+  opacity: 1;
+  filter: drop-shadow(0 0 6vmin #6104ad);
+  animation: spin 10s linear infinite;
 }
 
 #earth {
@@ -437,6 +366,21 @@ body {
   animation: spin 0.25s linear infinite;
 }
 
+#earth2:hover {
+  position: absolute;
+  top: 30vh;
+  left: 1120px;
+  right: 1000px;
+  width: 22vmin; /* פרמטר הרוחב שווה ל-22vmin כך שהתמונה תהיה מעגל מושלם */
+  height: 25vmin;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 0;
+  opacity: 1;
+  filter: drop-shadow(0 0 6vmin #6104ad);
+  animation: spin 0.5s linear infinite;
+}
+
 #earth3 {
   position: absolute;
   top: 6vh;
@@ -454,6 +398,15 @@ body {
 
 #venus2 {
   position: absolute;
+  width: 7%; /* Adjust the width to make it smaller */
+  top: 300px; /* Adjust the top position in pixels */
+  left: 1290px; /* Adjust the left position in pixels */
+  opacity: 0.7;
+  filter: drop-shadow(0 0 2vmin #cfa687);
+}
+
+#venus2:hover {
+  position: absolute;
   width: 100px; /* Adjust the width to make it smaller */
   top: 300px; /* Adjust the top position in pixels */
   left: 1290px; /* Adjust the left position in pixels */
@@ -463,11 +416,21 @@ body {
 
 #saturn {
   position: absolute;
-  width: 170px; /* Adjust the width to make it smaller */
+  width: 13%; /* Adjust the width to make it smaller */
   top: 250px; /* Adjust the top position in pixels */
   left: 100px; /* Adjust the left position in pixels */
   filter: drop-shadow(0 0 2vmin #87a3cf);
   opacity: 0.8;
+  animation: float-in-space 5s ease-in-out infinite; /* Adjust the animation duration as needed */
+}
+
+#saturn:hover {
+  position: absolute;
+  width: 170px; /* Adjust the width to make it smaller */
+  top: 250px; /* Adjust the top position in pixels */
+  left: 100px; /* Adjust the left position in pixels */
+  filter: drop-shadow(0 0 7vmin #87a3cf);
+  opacity: 1;
   animation: float-in-space 5s ease-in-out infinite; /* Adjust the animation duration as needed */
 }
 

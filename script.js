@@ -29,7 +29,10 @@ let circleTurn = false;
 let computerMode = false;
 let isSoundMuted = false;
 
-restartButton.addEventListener("click", restartGame);
+restartButton.addEventListener("click", function () {
+  changeIdTemporarily();
+  restartGame();
+});
 userOrComputerElement.classList.add("show");
 userVsComButton.addEventListener("click", userVsCom);
 userVsUserButton.addEventListener("click", userVsUser);
@@ -57,6 +60,19 @@ function toggleSound() {
 
 function playBackgroundMusic() {
   backgroundMusic.play();
+}
+
+function changeIdTemporarily() {
+  // Get the element by its ID
+  let element = document.getElementById("purple3");
+
+  // Change the ID to "purple4res"
+  element.id = "purple4res";
+
+  // After 3 seconds, change the ID back to "purple3"
+  setTimeout(function () {
+    element.id = "purple3";
+  }, 3000);
 }
 
 function userVsCom() {
