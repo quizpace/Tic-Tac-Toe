@@ -256,7 +256,7 @@ body {
   margin-left: auto;
   margin-right: auto;
   z-index: 0;
-  filter: drop-shadow(0 0 2vmin #d06df4);
+  filter: drop-shadow(0 0 7vmin #c2f7ee);
 }
 
 #purple:hover {
@@ -273,9 +273,9 @@ body {
 
 #purple2 {
   position: absolute;
-  top: 52vh;
+  top: 50vh;
   left: 0%;
-  right: 70%;
+  right: 75%;
   width: 22vmin; /* פרמטר הרוחב שווה ל-22vmin כך שהתמונה תהיה מעגל מושלם */
   height: 25vmin;
   margin-left: auto;
@@ -424,15 +424,15 @@ body {
   width: 100px; /* Adjust the width to make it smaller */
   top: 40%; /* Adjust the top position in pixels */
   left: 90%; /* Adjust the left position in pixels */
-  opacity: 0.7;
+  opacity: 0.8;
   filter: drop-shadow(0 0 2vmin #cfa687);
 }
 
 #saturn {
   position: absolute;
-  width: 13%; /* Adjust the width to make it smaller */
-  top: 25%; /* Adjust the top position in pixels */
-  left: 10%; /* Adjust the left position in pixels */
+  width: 10%; /* Adjust the width to make it smaller */
+  top: 32%; /* Adjust the top position in pixels */
+  left: 3%; /* Adjust the left position in pixels */
   filter: drop-shadow(0 0 2vmin #87a3cf);
   opacity: 0.8;
   animation: float-in-space 5s ease-in-out infinite; /* Adjust the animation duration as needed */
@@ -440,9 +440,9 @@ body {
 
 #saturn:hover {
   position: absolute;
-  width: 13%; /* Adjust the width to make it smaller */
-  top: 25%; /* Adjust the top position in pixels */
-  left: 10%; /* Adjust the left position in pixels */
+  width: 10%; /* Adjust the width to make it smaller */
+  top: 32%; /* Adjust the top position in pixels */
+  left: 3%; /* Adjust the left position in pixels */
   filter: drop-shadow(0 0 7vmin #87a3cf);
   opacity: 1;
   animation: float-in-space 5s ease-in-out infinite; /* Adjust the animation duration as needed */
@@ -454,7 +454,8 @@ body {
   font-family: "Rubik Moonrocks", sans-serif;
 }
 
-#mainMenuButton {
+#mainMenuButton,
+#fullscreen-button {
   font-family: "Rubik Moonrocks", sans-serif;
 }
 
@@ -486,14 +487,14 @@ body {
 
 
 #mute-buttons {
-  font-size: 50px;
+  font-size: 200%;
   border: none;
-  padding: 10px 20px;
-  border-radius: 30px;
+  padding: 2% 3%;
+  border-radius: 30%;
   cursor: pointer;
   position: absolute;
-  top: -90px;
-  right: 20px; /* Adjust the right position if needed */
+  bottom: 100%;
+  right: 8%; /* Adjust the right position if needed */
 }
 
 /* Animation for typing text effect */
@@ -862,27 +863,27 @@ body {
 /* Position the main menu button */
 .main-menu {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 1%;
+  right: 1%;;
   z-index: 1000;
 }
 
 /* Style the main menu button */
 .main-menu button {
-  font-size: 2.5rem;
+  font-size: 1.9rem;
   background: linear-gradient(
-    20deg,
-    rgb(225, 240, 22) 20%,
-    rgba(144, 225, 51, 6) 40%,
+    30deg,
+    rgb(22, 240, 149) 20%,
+    rgba(144, 225, 51, 6) 50%,
     rgba(187, 236, 7, 20) 0.1%,
-    rgb(219, 160, 254) 20%,
+    rgb(72, 11, 108) 20%,
     rgb(193, 252, 15) 100%
   );
   border: 3px solid transparent;
   padding: 0.75em 0.5em;
   cursor: pointer;
-  border-radius: 70%;
-  opacity: 30%;
+  border-radius: 30%;
+  opacity: 0.2;
   transition: box-shadow 0.3s ease-in-out, border 0.3s ease-in-out;
 }
 

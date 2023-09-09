@@ -29,6 +29,25 @@ let circleTurn = false;
 let computerMode = false;
 let isSoundMuted = false;
 
+const fullscreenButton = document.getElementById("fullscreen-button");
+
+fullscreenButton.addEventListener("click", () => {
+  if (document.fullscreenElement) {
+    // Exit fullscreen mode
+    document.exitFullscreen()
+      .catch((err) => {
+        console.error("Error exiting fullscreen:", err);
+      });
+  } else {
+    // Enter fullscreen mode
+    document.documentElement.requestFullscreen()
+      .catch((err) => {
+        console.error("Error entering fullscreen:", err);
+      });
+  }
+});
+
+
 restartButton.addEventListener("click", function () {
   changeIdTemporarily();
   restartGame();
