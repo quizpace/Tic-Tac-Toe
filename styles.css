@@ -181,19 +181,22 @@ body {
 }
 
 #alien2 {
-  width: 5%;
+  width: 40%;
   position: absolute;
   animation: moveAround 30s linear infinite;
+  animation: moveAroundSpin 15s linear infinite;
   transform-origin: center center;
+  opacity: 0.2;
 }
 
-#alien2:hover {
+/* #alien2:hover {
   width: 18%;
   position: absolute;
   animation: moveAround 30s linear infinite;
+  animation: moveAroundSpin 15s linear infinite;
   transform-origin: center center;
-  filter: drop-shadow(0 0 4vmin #f8c018);
-}
+  filter: drop-shadow(0 0 2vmin #f6c125);
+} */
 
 #spaceShip {
   width: 11%;
@@ -357,24 +360,24 @@ body {
   margin-left: auto;
   margin-right: auto;
   z-index: 0;
-  opacity: 1;
+  opacity: 0.6;
   filter: drop-shadow(0 0 6vmin #6104ad);
-  animation: spin 0.25s linear infinite;
+  animation: spin 0.2s linear infinite;
 }
 
 #earth2:hover {
   position: absolute;
   top: 30vh;
-  left: 1120px;
-  right: 1000px;
+  left: 77%;
+  right: 15%;
   width: 22vmin; /* פרמטר הרוחב שווה ל-22vmin כך שהתמונה תהיה מעגל מושלם */
   height: 25vmin;
   margin-left: auto;
   margin-right: auto;
   z-index: 0;
-  opacity: 1;
+  opacity: 0.2;
   filter: drop-shadow(0 0 6vmin #6104ad);
-  animation: spin 0.1s linear infinite;
+  animation: spin 0.5s linear infinite;
 }
 
 #earth3 {
@@ -387,8 +390,8 @@ body {
   margin-left: auto;
   margin-right: auto;
   z-index: 0;
-  opacity: 9;
-  filter: drop-shadow(0 0 6vmin #6104ad);
+  opacity: 1;
+  filter: drop-shadow(0 0 3vmin #c0f6eb);
   animation: spin 20s linear infinite;
 }
 
@@ -402,7 +405,7 @@ body {
   margin-left: auto;
   margin-right: auto;
   z-index: 0;
-  opacity: 9;
+  opacity: 0.8;
   filter: drop-shadow(0 0 6vmin #c0f6eb);
   animation: spin 2s linear infinite;
 }
@@ -629,6 +632,9 @@ body {
   justify-items: center;
   align-items: center;
   grid-template-columns: repeat(3, auto);
+  /* filter: drop-shadow(0 0 0vmin #37f5cf); */
+  /* filter: drop-shadow(0 0 1vmin #59039b); */
+  
 }
 
 .cell {
@@ -653,6 +659,7 @@ body {
     transform: rotate(360deg);
   }
 }
+
 
 .cell:hover {
   box-shadow: 0 0 90px 1px rgba(10, 13, 218, 0.7),
@@ -697,13 +704,17 @@ body {
 .cell.x::before,
 .cell.x::after {
   background-color: rgb(157, 241, 32);
-  box-shadow: 0 0 30px rgba(157, 241, 32, 0.7);
+  box-shadow: 0 0 8px rgba(157, 241, 32, 0.7);
+  filter: drop-shadow(0 0 0vmin #f537bf);
+  filter: drop-shadow(0 0 1vmin #5a37f5);
+  /* border-radius: 50%; */
   /* Adjust the color and spread (10px in this example) to control the glow effect */
 }
 
 .cell.circle::before {
   background-color: rgb(255, 177, 42);
-  box-shadow: 0 0 30px rgba(255, 177, 42, 0.7);
+  box-shadow: 0 0 8px rgba(255, 177, 42, 0.7);
+  filter: drop-shadow(0 0 1vmin #f98989);
   /* Adjust the color and spread (10px in this example) to control the glow effect */
 }
 
@@ -712,6 +723,7 @@ body {
 .board.circle .cell:not(.x):not(.circle):hover::before {
   background-color: darkgray;
   opacity: 0.2;
+  border-radius: 50%;
 }
 
 .cell.x::before,
