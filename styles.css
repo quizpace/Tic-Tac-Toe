@@ -455,41 +455,32 @@ body {
   font-family: "Rubik Moonrocks", sans-serif;
 }
 
-#sun {
+
+.sunmusic {
+  position: relative; /* Make the container a positioning context */
+  width: 2%; /* Set the width to whatever suits your layout */
+  height: 2%; /* Set the height to whatever suits your layout */
+}
+
+#sun, #sun1 {
   border: none;
   padding: 1% 2%;
   height: 20vmin;
   border-radius: 100%;
   cursor: pointer;
   position: absolute;
-  top: -50px;
-  left: -1100px;
+  bottom: 10%; /* Adjust this value to control the distance from the bottom */
+  left: 10%; /* Adjust this value to control the distance from the left */
   z-index: 2;
   opacity: 0.7;
 }
 
-#sun:hover {
+#sun:hover, #sun1:hover {
   opacity: 100%;
   transform: rotate(2deg);
   transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* Add transitions for a smooth effect */
 }
 
-#sun1 {
-  border: none;
-  padding: 30% 10%;
-  height: 20vmin;
-  border-radius: 100%;
-  position: absolute;
-  top: -50px;
-  left: -1100px;
-  opacity: 0.4;
-}
-
-#sun1:hover {
-  opacity: 100%;
-  transform: rotate(2deg);
-  transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* Add transitions for a smooth effect */
-}
 
 #mute-buttons {
   font-size: 50px;
@@ -904,18 +895,6 @@ body {
   opacity: 0.8;
 }
 
-/* Position the main menu button */
-.sunmusic {
-  position: fixed;
-  bottom: 15%;
-  right: 23%;
-  z-index: 1000;
-}
-
-/* Ensure the main menu button is visible at all times */
-.sunmusic {
-  display: grid;
-}
 
 @keyframes draw-cell-animation {
   0% {
