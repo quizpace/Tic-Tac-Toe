@@ -907,14 +907,14 @@ body {
 /* Position the main menu button */
 .sunmusic {
   position: fixed;
-  bottom: 110px;
-  right: 340px;
+  bottom: 15%;
+  right: 23%;
   z-index: 1000;
 }
 
 /* Ensure the main menu button is visible at all times */
 .sunmusic {
-  display: flex;
+  display: grid;
 }
 
 @keyframes draw-cell-animation {
